@@ -1,21 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sizer/sizer.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 import '../core/app_export.dart';
 import '../widgets/custom_error_widget.dart';
 
+// Move this outside main() to persist across app lifecycle
+bool _hasShownError = false;
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  bool _hasShownError = false;
+  try {
+    await Firebase.initializeApp();
+    print('✅ Firebase initialized successfully');
+  } catch (e) {
+    print('❌ Firebase initialization error: $e');
+  }
 
   // 🚨 CRITICAL: Custom error handling - DO NOT REMOVE
   ErrorWidget.builder = (FlutterErrorDetails details) {
     if (!_hasShownError) {
       _hasShownError = true;
 
-      // Reset flag after 3 seconds to allow error widget on new screens
+      // Reset flag after 5 seconds to allow error widget on new screens
       Future.delayed(Duration(seconds: 5), () {
         _hasShownError = false;
       });
@@ -28,11 +37,10 @@ void main() async {
   };
 
   // 🚨 CRITICAL: Device orientation lock - DO NOT REMOVE
-  Future.wait([
-    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
-  ]).then((value) {
-    runApp(MyApp());
-  });
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
+  // ✅ FIXED: Only call runApp() once
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
