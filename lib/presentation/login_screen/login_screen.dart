@@ -2,12 +2,14 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sizer/sizer.dart';
+import 'package:google_sign_in/google_sign_in.dart';  // Added missing import
 
 import '../../core/app_export.dart';
 import './widgets/biometric_login_dialog.dart';
 import './widgets/language_toggle_button.dart';
 import './widgets/social_login_section.dart';
 import './widgets/voice_input_button.dart';
+// import 'path/to/your/dashboard_home.dart';  // Add this import for DashboardHome
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -22,6 +24,12 @@ class _LoginScreenState extends State<LoginScreen> {
   final FocusNode _mobileFocusNode = FocusNode();
   final FocusNode _passwordFocusNode = FocusNode();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  // Added missing Google Sign-In variables
+  final GoogleSignIn _googleSignIn = GoogleSignIn(
+    scopes: ['email', 'https://www.googleapis.com/auth/userinfo.profile'],
+  );
+  GoogleSignInAccount? _currentUser;
 
   bool _isPasswordVisible = false;
   bool _isLoading = false;
@@ -76,7 +84,7 @@ class _LoginScreenState extends State<LoginScreen> {
     // Extract mobile number and password from voice input
     final mobileRegex = RegExp(r'\b\d{10}\b');
     final passwordRegex =
-        RegExp(r'पासवर्ड\s+(\w+)|password\s+(\w+)', caseSensitive: false);
+    RegExp(r'पासवर्ड\s+(\w+)|password\s+(\w+)', caseSensitive: false);
 
     final mobileMatch = mobileRegex.firstMatch(voiceText);
     final passwordMatch = passwordRegex.firstMatch(voiceText);
@@ -131,6 +139,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return null;
   }
 
+  // Added missing _handleLogin method
   Future<void> _handleLogin() async {
     if (!_formKey.currentState!.validate()) return;
 
@@ -182,6 +191,87 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
+  // Added missing _showSuccessMessage method
+  void _showSuccessMessage(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          message,
+          style: AppTheme.lightTheme.textTheme.bodyMedium?.copyWith(
+            color: AppTheme.lightTheme.colorScheme.onPrimary,
+          ),
+        ),
+        backgroundColor: AppTheme.lightTheme.colorScheme.primary,
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+      ),
+    );
+  }
+
+  // Fixed _handleGoogleLogin method (removed duplicate, kept the correct implementation)
+  Future<void> _handleGoogleLogin() async {
+    setState(() {
+      _isSocialLoading = true;
+    });
+
+    try {
+      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+
+      if (googleUser == null) {
+        _showErrorMessage(_getLocalizedText(
+          'Google लॉगिन रद्द किया गया',
+          'Google login canceled',
+        ));
+        return;
+      }
+
+      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+
+      setState(() {
+        _currentUser = googleUser;
+      });
+
+      HapticFeedback.lightImpact();
+
+      final userName = googleUser.displayName ?? _getLocalizedText('उपयोगकर्ता', 'User');
+      _showSuccessMessage(_getLocalizedText(
+        'स्वागत है, $userName',
+        'Welcome, $userName',
+      ));
+
+      // Navigate to dashboard - choose one approach:
+
+      // Option 1: Using named routes (recommended for consistency)
+      Navigator.pushReplacementNamed(context, '/dashboard-home');
+
+      // Option 2: Direct navigation (uncomment if you have DashboardHome imported)
+      /*
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => DashboardHome(
+            userName: userName,
+            userEmail: googleUser.email,
+            userPhotoUrl: googleUser.photoUrl,
+          ),
+        ),
+      );
+      */
+
+    } catch (e) {
+      _showErrorMessage(_getLocalizedText(
+        'Google लॉगिन में समस्या हुई: $e',
+        'Google login failed: $e',
+      ));
+    } finally {
+      setState(() {
+        _isSocialLoading = false;
+      });
+    }
+  }
+
   void _showBiometricSetupDialog() {
     showDialog(
       context: context,
@@ -198,27 +288,6 @@ class _LoginScreenState extends State<LoginScreen> {
         },
       ),
     );
-  }
-
-  Future<void> _handleGoogleLogin() async {
-    setState(() {
-      _isSocialLoading = true;
-    });
-
-    try {
-      await Future.delayed(const Duration(seconds: 2));
-      HapticFeedback.lightImpact();
-      _navigateToDashboard();
-    } catch (e) {
-      _showErrorMessage(_getLocalizedText(
-        'Google लॉगिन में समस्या हुई',
-        'Google login failed',
-      ));
-    } finally {
-      setState(() {
-        _isSocialLoading = false;
-      });
-    }
   }
 
   void _navigateToDashboard() {
@@ -372,7 +441,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         validator: _validateMobile,
                         decoration: InputDecoration(
                           labelText:
-                              _getLocalizedText('मोबाइल नंबर', 'Mobile Number'),
+                          _getLocalizedText('मोबाइल नंबर', 'Mobile Number'),
                           hintText: _getLocalizedText(
                               '10 अंकों का नंबर दर्ज करें',
                               'Enter 10 digit number'),
@@ -444,7 +513,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     VoiceInputButton(
                       onVoiceInput: _onVoiceInput,
                       hintText:
-                          _getLocalizedText('पासवर्ड बोलें', 'Speak password'),
+                      _getLocalizedText('पासवर्ड बोलें', 'Speak password'),
                     ),
                   ],
                 ),
@@ -476,32 +545,32 @@ class _LoginScreenState extends State<LoginScreen> {
                     onPressed: _isLoading ? null : _handleLogin,
                     child: _isLoading
                         ? Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SizedBox(
-                                width: 5.w,
-                                height: 5.w,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 2,
-                                  color:
-                                      AppTheme.lightTheme.colorScheme.onPrimary,
-                                ),
-                              ),
-                              SizedBox(width: 3.w),
-                              Text(
-                                _getLocalizedText(
-                                    'लॉगिन हो रहा है...', 'Logging in...'),
-                              ),
-                            ],
-                          )
-                        : Text(
-                            _getLocalizedText('लॉगिन करें', 'Login'),
-                            style: AppTheme.lightTheme.textTheme.labelLarge
-                                ?.copyWith(
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.w600,
-                            ),
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          width: 5.w,
+                          height: 5.w,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color:
+                            AppTheme.lightTheme.colorScheme.onPrimary,
                           ),
+                        ),
+                        SizedBox(width: 3.w),
+                        Text(
+                          _getLocalizedText(
+                              'लॉगिन हो रहा है...', 'Logging in...'),
+                        ),
+                      ],
+                    )
+                        : Text(
+                      _getLocalizedText('लॉगिन करें', 'Login'),
+                      style: AppTheme.lightTheme.textTheme.labelLarge
+                          ?.copyWith(
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
                   ),
                 ),
 
@@ -537,7 +606,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Text(
                         _getLocalizedText('पंजीकरण करें', 'Register'),
                         style:
-                            AppTheme.lightTheme.textTheme.bodyMedium?.copyWith(
+                        AppTheme.lightTheme.textTheme.bodyMedium?.copyWith(
                           color: AppTheme.lightTheme.colorScheme.primary,
                           fontWeight: FontWeight.w600,
                         ),
