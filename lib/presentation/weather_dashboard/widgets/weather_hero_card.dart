@@ -23,13 +23,13 @@ class WeatherHeroCard extends StatelessWidget {
           end: Alignment.bottomRight,
           colors: [
             AppTheme.lightTheme.primaryColor,
-            AppTheme.lightTheme.primaryColor.withValues(alpha: 0.8),
+            AppTheme.lightTheme.primaryColor.withOpacity(0.8),
           ],
         ),
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: AppTheme.lightTheme.primaryColor.withValues(alpha: 0.3),
+            color: AppTheme.lightTheme.primaryColor.withOpacity(0.3),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -38,17 +38,18 @@ class WeatherHeroCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Top row: location and edit
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              // Location info
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       currentWeather['location'] ?? 'Unknown Location',
-                      style:
-                          AppTheme.lightTheme.textTheme.titleMedium?.copyWith(
+                      style: AppTheme.lightTheme.textTheme.titleMedium?.copyWith(
                         color: Colors.white,
                         fontWeight: FontWeight.w500,
                       ),
@@ -57,17 +58,16 @@ class WeatherHeroCard extends StatelessWidget {
                     SizedBox(height: 1.h),
                     Row(
                       children: [
-                        CustomIconWidget(
-                          iconName: 'location_on',
-                          color: Colors.white.withValues(alpha: 0.8),
+                        Icon(
+                          Icons.location_on,
+                          color: Colors.white.withOpacity(0.8),
                           size: 16,
                         ),
                         SizedBox(width: 1.w),
                         Text(
                           'GPS Accuracy: ${currentWeather['gpsAccuracy'] ?? 'High'}',
-                          style:
-                              AppTheme.lightTheme.textTheme.bodySmall?.copyWith(
-                            color: Colors.white.withValues(alpha: 0.8),
+                          style: AppTheme.lightTheme.textTheme.bodySmall?.copyWith(
+                            color: Colors.white.withOpacity(0.8),
                           ),
                         ),
                       ],
@@ -75,18 +75,20 @@ class WeatherHeroCard extends StatelessWidget {
                   ],
                 ),
               ),
+
+              // Edit location button
               GestureDetector(
                 onTap: () {
-                  // Handle location change
+                  // Handle manual location change
                 },
                 child: Container(
                   padding: EdgeInsets.all(2.w),
                   decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: 0.2),
+                    color: Colors.white.withOpacity(0.2),
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: CustomIconWidget(
-                    iconName: 'edit_location',
+                  child: Icon(
+                    Icons.edit_location,
                     color: Colors.white,
                     size: 20,
                   ),
@@ -94,7 +96,10 @@ class WeatherHeroCard extends StatelessWidget {
               ),
             ],
           ),
+
           SizedBox(height: 3.h),
+
+          // Temperature & icon
           Row(
             children: [
               Expanded(
@@ -103,26 +108,24 @@ class WeatherHeroCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '${currentWeather['temperature'] ?? '25'}°C',
-                      style:
-                          AppTheme.lightTheme.textTheme.displayMedium?.copyWith(
+                      '${currentWeather['temperature']?.round() ?? 0}°C',
+                      style: AppTheme.lightTheme.textTheme.displayMedium?.copyWith(
                         color: Colors.white,
                         fontWeight: FontWeight.w300,
                         fontSize: 25.sp,
                       ),
                     ),
                     Text(
-                      currentWeather['condition'] ?? 'Partly Cloudy',
-                      style:
-                          AppTheme.lightTheme.textTheme.titleMedium?.copyWith(
-                        color: Colors.white.withValues(alpha: 0.9),
+                      currentWeather['condition'] ?? '',
+                      style: AppTheme.lightTheme.textTheme.titleMedium?.copyWith(
+                        color: Colors.white.withOpacity(0.9),
                       ),
                     ),
                     SizedBox(height: 1.h),
                     Text(
-                      'Feels like ${currentWeather['feelsLike'] ?? '28'}°C',
+                      'Feels like ${currentWeather['feelsLike']?.round() ?? 0}°C',
                       style: AppTheme.lightTheme.textTheme.bodyMedium?.copyWith(
-                        color: Colors.white.withValues(alpha: 0.8),
+                        color: Colors.white.withOpacity(0.8),
                       ),
                     ),
                   ],
@@ -130,38 +133,37 @@ class WeatherHeroCard extends StatelessWidget {
               ),
               Expanded(
                 flex: 1,
-                child: Column(
-                  children: [
-                    CustomImageWidget(
-                      imageUrl: currentWeather['weatherIcon'] ??
-                          'https://openweathermap.org/img/wn/02d@2x.png',
-                      width: 20.w,
-                      height: 20.w,
-                      fit: BoxFit.contain,
-                    ),
-                  ],
+                child: Image.network(
+                  currentWeather['weatherIcon'] ??
+                      'https://openweathermap.org/img/wn/02d@2x.png',
+                  width: 20.w,
+                  height: 20.w,
+                  fit: BoxFit.contain,
                 ),
               ),
             ],
           ),
+
           SizedBox(height: 3.h),
+
+          // Metrics row
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               _buildWeatherMetric(
                 'Humidity',
-                '${currentWeather['humidity'] ?? '65'}%',
-                'water_drop',
+                '${currentWeather['humidity']?.round() ?? 0}%',
+                Icons.water_drop,
               ),
               _buildWeatherMetric(
-                'Wind Speed',
-                '${currentWeather['windSpeed'] ?? '12'} km/h',
-                'air',
+                'Wind',
+                '${currentWeather['windSpeed']?.round() ?? 0} km/h',
+                Icons.air,
               ),
               _buildWeatherMetric(
-                'Rain Chance',
-                '${currentWeather['rainChance'] ?? '30'}%',
-                'umbrella',
+                'Rain',
+                '${currentWeather['rainChance']?.round() ?? 0}%',
+                Icons.umbrella,
               ),
             ],
           ),
@@ -170,12 +172,12 @@ class WeatherHeroCard extends StatelessWidget {
     );
   }
 
-  Widget _buildWeatherMetric(String label, String value, String iconName) {
+  Widget _buildWeatherMetric(String label, String value, IconData icon) {
     return Column(
       children: [
-        CustomIconWidget(
-          iconName: iconName,
-          color: Colors.white.withValues(alpha: 0.8),
+        Icon(
+          icon,
+          color: Colors.white.withOpacity(0.8),
           size: 24,
         ),
         SizedBox(height: 0.5.h),
@@ -189,7 +191,7 @@ class WeatherHeroCard extends StatelessWidget {
         Text(
           label,
           style: AppTheme.lightTheme.textTheme.bodySmall?.copyWith(
-            color: Colors.white.withValues(alpha: 0.8),
+            color: Colors.white.withOpacity(0.8),
           ),
         ),
       ],

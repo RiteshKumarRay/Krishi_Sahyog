@@ -3,7 +3,7 @@ import 'package:sizer/sizer.dart';
 import 'package:intl/intl.dart';
 
 import '../../core/app_export.dart';
-import '../../services/weather_service.dart';
+import '../../../services/weather_service.dart';
 import './widgets/agricultural_alerts_widget.dart';
 import './widgets/hourly_forecast_widget.dart';
 import './widgets/sun_times_widget.dart';

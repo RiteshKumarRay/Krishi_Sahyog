@@ -10,6 +10,7 @@ import './widgets/status_bar_widget.dart';
 import './widgets/voice_assistant_button_widget.dart';
 import './widgets/weather_card_widget.dart';
 
+
 class DashboardHome extends StatefulWidget {
   const DashboardHome({Key? key}) : super(key: key);
 
@@ -305,7 +306,6 @@ class _DashboardHomeState extends State<DashboardHome> with TickerProviderStateM
                       // Mic floating button removed here.
 
                       WeatherCardWidget(
-                        weatherData: _weatherData,
                         onTap: () => Navigator.pushNamed(context, '/weather-dashboard'),
                       ),
                       SizedBox(height: 3.h),
