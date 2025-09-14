@@ -50,8 +50,8 @@ class _LoginScreenState extends State<LoginScreen> {
       'name': 'डॉ. सुनीता शर्मा',
     },
     'admin': {
-      'mobile': '9876543212',
-      'password': 'admin123',
+      'mobile': '1234567890',
+      'password': '123456',
       'name': 'प्रशासक',
     },
   };
