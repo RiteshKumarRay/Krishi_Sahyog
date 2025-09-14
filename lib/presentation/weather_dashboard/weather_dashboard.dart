@@ -24,7 +24,7 @@ class _WeatherDashboardState extends State<WeatherDashboard>
 
   // Mock data for weather dashboard
   final Map<String, dynamic> _currentWeather = {
-    "location": "Pune, Maharashtra",
+    "location": "Landran, Punjab",
     "gpsAccuracy": "High",
     "temperature": 28,
     "feelsLike": 32,
@@ -438,16 +438,16 @@ class _WeatherDashboardState extends State<WeatherDashboard>
           ),
           BottomNavigationBarItem(
             icon: CustomIconWidget(
-              iconName: 'mic',
+              iconName: 'chat',
               color: AppTheme.lightTheme.colorScheme.onSurfaceVariant,
               size: 24,
             ),
             activeIcon: CustomIconWidget(
-              iconName: 'mic',
+              iconName: 'chat',
               color: AppTheme.lightTheme.primaryColor,
               size: 24,
             ),
-            label: 'Voice',
+            label: 'Assistant',
           ),
           BottomNavigationBarItem(
             icon: CustomIconWidget(

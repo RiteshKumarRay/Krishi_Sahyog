@@ -297,8 +297,8 @@ class _DashboardHomeState extends State<DashboardHome> with TickerProviderStateM
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       GreetingHeaderWidget(
-                        farmerName: "राम कुमार शर्मा",
-                        location: "गाजियाबाद, उत्तर प्रदेश",
+                        farmerName: "रितेश कुमार",
+                        location: "लांडरां, पंजाब",
                       ),
                       SizedBox(height: 2.h),
 

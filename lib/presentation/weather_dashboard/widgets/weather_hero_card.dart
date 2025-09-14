@@ -108,7 +108,7 @@ class WeatherHeroCard extends StatelessWidget {
                           AppTheme.lightTheme.textTheme.displayMedium?.copyWith(
                         color: Colors.white,
                         fontWeight: FontWeight.w300,
-                        fontSize: 48.sp,
+                        fontSize: 25.sp,
                       ),
                     ),
                     Text(
