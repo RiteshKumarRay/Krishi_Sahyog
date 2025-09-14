@@ -126,7 +126,7 @@ class _CommunityForumScreenState extends State<CommunityForumScreen> {
                         color: AppTheme.lightTheme.colorScheme.primary,
                         size: 18,
                       ),
-                      const SizedBox(width: 6),
+                      const SizedBox(width: 5),
                       Text(
                         "${post.repliesCount} जवाब",
                         style: AppTheme.lightTheme.textTheme.bodySmall?.copyWith(

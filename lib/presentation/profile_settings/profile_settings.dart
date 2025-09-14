@@ -19,13 +19,13 @@ class ProfileSettings extends StatefulWidget {
 class _ProfileSettingsState extends State<ProfileSettings> {
   // Mock profile data
   Map<String, dynamic> profileData = {
-    "name": "Rajesh Kumar",
-    "mobile": "+91 98765 43210",
-    "email": "rajesh.kumar@example.com",
-    "location": "Ludhiana, Punjab",
+    "name": "Ritesh Kumar",
+    "mobile": "+91 70155 03726",
+    "email": "ritesh.kumar123@gmail.com",
+    "location": "Landran, Punjab",
     "farmSize": "5.2 hectares",
     "profileImage":
-        "https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=400",
+        "https://akm-img-a-in.tosshub.com/indiatoday/images/story/202405/pm-modi-smiling-064650291-16x9_0.jpeg?VersionId=jB9Lbi.Ok_FF1q5NWLNuMtK9MVa7EfRp&size=690:388",
     "memberSince": "2022",
     "farmCoordinates": "30.9010° N, 75.8573° E",
     "primaryCrops": "Wheat, Rice, Sugarcane",

@@ -38,7 +38,7 @@ class StatusBarWidget extends StatelessWidget {
             color: isOnline
                 ? AppTheme.lightTheme.primaryColor
                 : AppTheme.lightTheme.colorScheme.error,
-            size: 4.w,
+            size: 5.w,
           ),
           SizedBox(width: 2.w),
           Text(
@@ -48,16 +48,16 @@ class StatusBarWidget extends StatelessWidget {
                   ? AppTheme.lightTheme.primaryColor
                   : AppTheme.lightTheme.colorScheme.error,
               fontWeight: FontWeight.w500,
-              fontSize: 10.sp,
+              fontSize: 13.sp,
             ),
           ),
           if (networkType != null && isOnline) ...[
-            SizedBox(width: 1.w),
+            SizedBox(width: 2.w),
             Text(
               "($networkType)",
               style: AppTheme.lightTheme.textTheme.bodySmall?.copyWith(
                 color: AppTheme.lightTheme.colorScheme.onSurfaceVariant,
-                fontSize: 9.sp,
+                fontSize: 13.sp,
               ),
             ),
           ],
@@ -66,14 +66,14 @@ class StatusBarWidget extends StatelessWidget {
             CustomIconWidget(
               iconName: 'sync',
               color: AppTheme.lightTheme.colorScheme.onSurfaceVariant,
-              size: 3.5.w,
+              size: 5.w,
             ),
-            SizedBox(width: 1.w),
+            SizedBox(width: 2.w),
             Text(
               "अंतिम सिंक: $lastSync",
               style: AppTheme.lightTheme.textTheme.bodySmall?.copyWith(
                 color: AppTheme.lightTheme.colorScheme.onSurfaceVariant,
-                fontSize: 9.sp,
+                fontSize: 13.sp,
               ),
             ),
           ],

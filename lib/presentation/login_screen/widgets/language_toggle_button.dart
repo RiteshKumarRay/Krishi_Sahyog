@@ -101,7 +101,7 @@ class _LanguageToggleButtonState extends State<LanguageToggleButton>
                 );
               },
             ),
-            SizedBox(width: 2.w),
+            SizedBox(width: 3.w),
             Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -117,7 +117,7 @@ class _LanguageToggleButtonState extends State<LanguageToggleButton>
                   _fullLanguageName,
                   style: AppTheme.lightTheme.textTheme.labelSmall?.copyWith(
                     color: AppTheme.lightTheme.colorScheme.onSurfaceVariant,
-                    fontSize: 8.sp,
+                    fontSize: 11.sp,
                   ),
                 ),
               ],

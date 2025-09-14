@@ -121,7 +121,7 @@ class WeatherCardWidget extends StatelessWidget {
           label,
           style: AppTheme.lightTheme.textTheme.bodySmall?.copyWith(
             color: Colors.white.withValues(alpha: 0.8),
-            fontSize: 10.sp,
+            fontSize: 13.sp,
           ),
         ),
         Text(
@@ -129,7 +129,7 @@ class WeatherCardWidget extends StatelessWidget {
           style: AppTheme.lightTheme.textTheme.bodyMedium?.copyWith(
             color: Colors.white,
             fontWeight: FontWeight.w600,
-            fontSize: 11.sp,
+            fontSize: 15.sp,
           ),
         ),
       ],
