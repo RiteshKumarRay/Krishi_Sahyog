@@ -4,6 +4,9 @@ import 'package:flutter/services.dart';
 import 'package:sizer/sizer.dart';
 import 'package:google_sign_in/google_sign_in.dart';  // Added missing import
 
+import '../../services/auth_service.dart';
+import '../../services/firebase_auth_service.dart';
+import '../dashboard_home/dashboard_home.dart';
 import '../../core/app_export.dart';
 import './widgets/biometric_login_dialog.dart';
 import './widgets/language_toggle_button.dart';
@@ -148,36 +151,35 @@ class _LoginScreenState extends State<LoginScreen> {
     });
 
     try {
-      await Future.delayed(const Duration(seconds: 2));
+      // Use Firebase Auth instead of mock credentials
+      final result = await AuthService.signInWithPhoneAndPassword(
+        phoneNumber: _mobileController.text,
+        password: _passwordController.text,
+      );
 
-      // Check mock credentials
-      bool isValidCredentials = false;
-      String userType = '';
-
-      for (String type in _mockCredentials.keys) {
-        final credentials = _mockCredentials[type]!;
-        if (_mobileController.text == credentials['mobile'] &&
-            _passwordController.text == credentials['password']) {
-          isValidCredentials = true;
-          userType = type;
-          break;
-        }
-      }
-
-      if (isValidCredentials) {
+      if (result['success']) {
         HapticFeedback.lightImpact();
 
-        // Show biometric setup dialog for first-time login
-        if (_showBiometricOption) {
-          _showBiometricSetupDialog();
+        // Get user data
+        final userData = result['userData'] as Map<String, dynamic>?;
+        final userType = userData?['userType'] ?? 'farmer';
+        final userName = userData?['name'] ?? 'उपयोगकर्ता';
+
+        _showSuccessMessage(_getLocalizedText(
+          'स्वागत है, $userName!',
+          'Welcome, $userName!',
+        ));
+
+        // Navigate based on user type
+        if (userType == 'admin') {
+          Navigator.pushReplacementNamed(context, '/admin-dashboard');
+        } else if (userType == 'advisor') {
+          Navigator.pushReplacementNamed(context, '/advisor-dashboard');
         } else {
-          _navigateToDashboard();
+          Navigator.pushReplacementNamed(context, '/farmer-dashboard');
         }
       } else {
-        _showErrorMessage(_getLocalizedText(
-          'गलत मोबाइल नंबर या पासवर्ड। कृपया पुनः प्रयास करें।',
-          'Invalid mobile number or password. Please try again.',
-        ));
+        _showErrorMessage(result['message']);
       }
     } catch (e) {
       _showErrorMessage(_getLocalizedText(
@@ -190,6 +192,7 @@ class _LoginScreenState extends State<LoginScreen> {
       });
     }
   }
+
 
   // Added missing _showSuccessMessage method
   void _showSuccessMessage(String message) {
@@ -211,6 +214,8 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   // Fixed _handleGoogleLogin method (removed duplicate, kept the correct implementation)
+
+
   Future<void> _handleGoogleLogin() async {
     setState(() {
       _isSocialLoading = true;
@@ -240,25 +245,22 @@ class _LoginScreenState extends State<LoginScreen> {
         'स्वागत है, $userName',
         'Welcome, $userName',
       ));
-
-      // Navigate to dashboard - choose one approach:
-
       // Option 1: Using named routes (recommended for consistency)
       Navigator.pushReplacementNamed(context, '/dashboard-home');
 
       // Option 2: Direct navigation (uncomment if you have DashboardHome imported)
-      /*
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => DashboardHome(
-            userName: userName,
-            userEmail: googleUser.email,
-            userPhotoUrl: googleUser.photoUrl,
-          ),
-        ),
-      );
-      */
+      //
+      // Navigator.pushReplacement(
+      //   context,
+      //   MaterialPageRoute(
+      //     builder: (context) => DashboardHome(
+      //       userName: userName,
+      //       userEmail: googleUser.email,
+      //       userPhotoUrl: googleUser.photoUrl,
+      //     ),
+      //   ),
+      // );
+
 
     } catch (e) {
       _showErrorMessage(_getLocalizedText(
@@ -291,7 +293,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _navigateToDashboard() {
-    Navigator.pushReplacementNamed(context, '/dashboard-home');
+    Navigator.pushReplacementNamed(context, '/dashboard_home');
   }
 
   void _showErrorMessage(String message) {

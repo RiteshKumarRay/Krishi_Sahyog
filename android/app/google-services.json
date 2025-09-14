@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "819802039675",
+    "project_id": "krishi-sahyog-7121f",
+    "storage_bucket": "krishi-sahyog-7121f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:819802039675:android:b245b0c2bb0069424b49de",
+        "android_client_info": {
+          "package_name": "com.example.krishi_sahyog"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "819802039675-go7v182mqrjd30g0rta2s5o0vogdghbv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.krishi_sahyog",
+            "certificate_hash": "f35e6e50108a2d3560991e6ae642f1a8eb17f494"
+          }
+        },
+        {
+          "client_id": "819802039675-ckflfest8n9u96qdsclipecgqqpkrhgb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD792_VLPHxqqXBb_LPry3DjKcpck0DKnE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "819802039675-ckflfest8n9u96qdsclipecgqqpkrhgb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
