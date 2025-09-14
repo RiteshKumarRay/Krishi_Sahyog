@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sizer/sizer.dart';
-import 'package:google_sign_in/google_sign_in.dart';  // Added missing import
+import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../services/auth_service.dart';
 import '../../services/firebase_auth_service.dart';
@@ -12,7 +12,6 @@ import './widgets/biometric_login_dialog.dart';
 import './widgets/language_toggle_button.dart';
 import './widgets/social_login_section.dart';
 import './widgets/voice_input_button.dart';
-// import 'path/to/your/dashboard_home.dart';  // Add this import for DashboardHome
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -28,7 +27,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final FocusNode _passwordFocusNode = FocusNode();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  // Added missing Google Sign-In variables
+  // Google Sign-In variables
   final GoogleSignIn _googleSignIn = GoogleSignIn(
     scopes: ['email', 'https://www.googleapis.com/auth/userinfo.profile'],
   );
@@ -45,7 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
     'farmer': {
       'mobile': '9876543210',
       'password': 'farmer123',
-      'name': 'राम कुमार',
+      'name': 'रितेश कुमार',
     },
     'advisor': {
       'mobile': '9876543211',
@@ -142,7 +141,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return null;
   }
 
-  // Added missing _handleLogin method
+  // Updated _handleLogin method to support both mock credentials and real auth
   Future<void> _handleLogin() async {
     if (!_formKey.currentState!.validate()) return;
 
@@ -150,18 +149,26 @@ class _LoginScreenState extends State<LoginScreen> {
       _isLoading = true;
     });
 
+    String mobile = _mobileController.text.trim();
+    String password = _passwordController.text.trim();
+
     try {
-      // Use Firebase Auth instead of mock credentials
+      // First, check mock credentials
+      bool mockLoginSuccess = await _tryMockLogin(mobile, password);
+
+      if (mockLoginSuccess) {
+        return; // Mock login successful, exit early
+      }
+
+      // If mock login fails, try real Firebase auth
       final result = await AuthService.signInWithPhoneAndPassword(
-        phoneNumber: _mobileController.text,
-        password: _passwordController.text,
+        phoneNumber: mobile,
+        password: password,
       );
 
       if (result['success']) {
         HapticFeedback.lightImpact();
-
-        // Get user data
-        final userData = result['userData'] as Map<String, dynamic>?;
+        final userData = result['userData'] as Map?;
         final userType = userData?['userType'] ?? 'farmer';
         final userName = userData?['name'] ?? 'उपयोगकर्ता';
 
@@ -170,21 +177,14 @@ class _LoginScreenState extends State<LoginScreen> {
           'Welcome, $userName!',
         ));
 
-        // Navigate based on user type
-        if (userType == 'admin') {
-          Navigator.pushReplacementNamed(context, '/admin-dashboard');
-        } else if (userType == 'advisor') {
-          Navigator.pushReplacementNamed(context, '/advisor-dashboard');
-        } else {
-          Navigator.pushReplacementNamed(context, '/farmer-dashboard');
-        }
+        _navigateBasedOnUserType(userType);
       } else {
-        _showErrorMessage(result['message']);
+        _showErrorMessage(result['message'] ?? 'Login failed');
       }
     } catch (e) {
       _showErrorMessage(_getLocalizedText(
-        'लॉगिन में समस्या हुई। कृपया पुनः प्रयास करें।',
-        'Login failed. Please try again.',
+        'अमान्य मोबाइल नंबर या पासवर्ड',
+        'Invalid mobile number or password',
       ));
     } finally {
       setState(() {
@@ -193,8 +193,53 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
+  // Helper method to try mock login
+  Future<bool> _tryMockLogin(String mobile, String password) async {
+    // Simulate a small delay for mock authentication
+    await Future.delayed(Duration(milliseconds: 500));
 
-  // Added missing _showSuccessMessage method
+    // Check each mock credential
+    for (var entry in _mockCredentials.entries) {
+      String userType = entry.key;
+      Map<String, String> credentials = entry.value;
+
+      if (credentials['mobile'] == mobile && credentials['password'] == password) {
+        String userName = credentials['name']!;
+
+        HapticFeedback.lightImpact();
+        _showSuccessMessage(_getLocalizedText(
+          'स्वागत है, $userName!',
+          'Welcome, $userName!',
+        ));
+
+        _navigateBasedOnUserType(userType);
+        return true; // Mock login successful
+      }
+    }
+    return false; // No mock credentials matched
+  }
+
+  // Helper method to navigate based on user type
+  void _navigateBasedOnUserType(String userType) {
+    // For now, all user types go to dashboard-home
+    Navigator.pushReplacementNamed(context, '/dashboard-home');
+
+    /* Uncomment and modify when you have different dashboards:
+    switch (userType) {
+      case 'admin':
+        Navigator.pushReplacementNamed(context, '/admin-dashboard');
+        break;
+      case 'advisor':
+        Navigator.pushReplacementNamed(context, '/advisor-dashboard');
+        break;
+      case 'farmer':
+      default:
+        Navigator.pushReplacementNamed(context, '/dashboard-home');
+        break;
+    }
+    */
+  }
+
   void _showSuccessMessage(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -213,9 +258,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  // Fixed _handleGoogleLogin method (removed duplicate, kept the correct implementation)
-
-
+  // Google Login method
   Future<void> _handleGoogleLogin() async {
     setState(() {
       _isSocialLoading = true;
@@ -223,7 +266,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
     try {
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
-
       if (googleUser == null) {
         _showErrorMessage(_getLocalizedText(
           'Google लॉगिन रद्द किया गया',
@@ -233,34 +275,20 @@ class _LoginScreenState extends State<LoginScreen> {
       }
 
       final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-
       setState(() {
         _currentUser = googleUser;
       });
 
       HapticFeedback.lightImpact();
-
       final userName = googleUser.displayName ?? _getLocalizedText('उपयोगकर्ता', 'User');
+
       _showSuccessMessage(_getLocalizedText(
         'स्वागत है, $userName',
         'Welcome, $userName',
       ));
-      // Option 1: Using named routes (recommended for consistency)
+
+      // Navigate to dashboard
       Navigator.pushReplacementNamed(context, '/dashboard-home');
-
-      // Option 2: Direct navigation (uncomment if you have DashboardHome imported)
-      //
-      // Navigator.pushReplacement(
-      //   context,
-      //   MaterialPageRoute(
-      //     builder: (context) => DashboardHome(
-      //       userName: userName,
-      //       userEmail: googleUser.email,
-      //       userPhotoUrl: googleUser.photoUrl,
-      //     ),
-      //   ),
-      // );
-
 
     } catch (e) {
       _showErrorMessage(_getLocalizedText(
@@ -293,7 +321,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _navigateToDashboard() {
-    Navigator.pushReplacementNamed(context, '/dashboard_home');
+    Navigator.pushReplacementNamed(context, '/dashboard-home');
   }
 
   void _showErrorMessage(String message) {
@@ -393,7 +421,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     boxShadow: [
                       BoxShadow(
                         color: AppTheme.lightTheme.colorScheme.primary
-                            .withValues(alpha: 0.2),
+                            .withOpacity(0.2),
                         blurRadius: 20,
                         spreadRadius: 5,
                       ),

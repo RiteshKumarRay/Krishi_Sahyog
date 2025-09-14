@@ -133,13 +133,7 @@ class WeatherHeroCard extends StatelessWidget {
               ),
               Expanded(
                 flex: 1,
-                child: Image.network(
-                  currentWeather['weatherIcon'] ??
-                      'https://openweathermap.org/img/wn/02d@2x.png',
-                  width: 20.w,
-                  height: 20.w,
-                  fit: BoxFit.contain,
-                ),
+                child: _buildWeatherIcon(currentWeather['condition'] ?? '', 20.w),
               ),
             ],
           ),
@@ -168,6 +162,82 @@ class WeatherHeroCard extends StatelessWidget {
             ],
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildWeatherIcon(String condition, double size) {
+    IconData iconData;
+    Color iconColor = Colors.white;
+
+    // Determine time of day for sun/moon
+    final now = DateTime.now();
+    final hour = now.hour;
+    final isNight = hour < 6 || hour > 18;
+
+    switch (condition.toLowerCase()) {
+      case 'clear':
+      case 'clear sky':
+        iconData = isNight ? Icons.nights_stay : Icons.wb_sunny;
+        iconColor = isNight ? Colors.blue.shade100 : Colors.yellow.shade100;
+        break;
+      case 'clouds':
+      case 'few clouds':
+      case 'scattered clouds':
+      case 'broken clouds':
+      case 'overcast clouds':
+      case 'partly cloudy':
+        iconData = Icons.cloud;
+        iconColor = Colors.grey.shade100;
+        break;
+      case 'rain':
+      case 'light rain':
+      case 'moderate rain':
+      case 'heavy rain':
+      case 'shower rain':
+        iconData = Icons.grain;
+        iconColor = Colors.blue.shade100;
+        break;
+      case 'drizzle':
+      case 'light intensity drizzle':
+        iconData = Icons.grain;
+        iconColor = Colors.lightBlue.shade100;
+        break;
+      case 'thunderstorm':
+      case 'thunderstorm with light rain':
+      case 'thunderstorm with rain':
+        iconData = Icons.thunderstorm;
+        iconColor = Colors.purple.shade100;
+        break;
+      case 'snow':
+      case 'light snow':
+      case 'heavy snow':
+        iconData = Icons.ac_unit;
+        iconColor = Colors.white;
+        break;
+      case 'mist':
+      case 'fog':
+      case 'haze':
+      case 'smoke':
+        iconData = Icons.blur_on;
+        iconColor = Colors.grey.shade200;
+        break;
+      default:
+        iconData = isNight ? Icons.nights_stay : Icons.wb_sunny;
+        iconColor = isNight ? Colors.blue.shade100 : Colors.yellow.shade100;
+    }
+
+    return Container(
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: Colors.white.withOpacity(0.1),
+      ),
+      child: Icon(
+        iconData,
+        size: size * 0.6,
+        color: iconColor,
       ),
     );
   }
