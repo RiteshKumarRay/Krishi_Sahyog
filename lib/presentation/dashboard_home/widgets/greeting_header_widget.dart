@@ -46,7 +46,7 @@ class GreetingHeaderWidget extends StatelessWidget {
                     Text(
                       farmerName,
                       style:
-                          AppTheme.lightTheme.textTheme.headlineSmall?.copyWith(
+                      AppTheme.lightTheme.textTheme.headlineSmall?.copyWith(
                         fontWeight: FontWeight.w600,
                         color: AppTheme.lightTheme.colorScheme.onSurface,
                       ),
@@ -60,7 +60,7 @@ class GreetingHeaderWidget extends StatelessWidget {
                 padding: EdgeInsets.all(2.w),
                 decoration: BoxDecoration(
                   color:
-                      AppTheme.lightTheme.primaryColor.withValues(alpha: 0.1),
+                  AppTheme.lightTheme.primaryColor.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: CustomIconWidget(
@@ -100,11 +100,11 @@ class GreetingHeaderWidget extends StatelessWidget {
   String _getGreeting() {
     final hour = DateTime.now().hour;
     if (hour < 12) {
-      return "सुप्रभात";
+      return "Good Morning";
     } else if (hour < 17) {
-      return "नमस्कार";
+      return "Good Afternoon";
     } else {
-      return "शुभ संध्या";
+      return "Good Evening";
     }
   }
 }

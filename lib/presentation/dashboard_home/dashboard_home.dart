@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:record/record.dart';
 import 'package:sizer/sizer.dart';
+import 'package:image_picker/image_picker.dart';
 import '../../core/app_export.dart';
 import './widgets/feature_card_widget.dart';
 import './widgets/greeting_header_widget.dart';
@@ -26,9 +27,9 @@ class _DashboardHomeState extends State<DashboardHome> with TickerProviderStateM
   late TabController _tabController;
 
   final Map<String, dynamic> _weatherData = {
-    "location": "दिल्ली, भारत",
+    "location": "Delhi, India",
     "temperature": 28,
-    "condition": "धूप",
+    "condition": "Sunny",
     "humidity": 65,
     "windSpeed": 12,
     "rainfall": 5,
@@ -37,41 +38,41 @@ class _DashboardHomeState extends State<DashboardHome> with TickerProviderStateM
   final List<Map<String, dynamic>> _features = [
     {
       "id": "soil_scan",
-      "title": "मिट्टी स्वास्थ्य स्कैन",
-      "description": "अपने मिट्टी स्वास्थ्य कार्ड को स्कैन करें और तुरंत विश्लेषण प्राप्त करें",
+      "title": "Soil Health Scan",
+      "description": "Scan your soil health card and get instant analysis",
       "icon": "document_scanner",
       "color": Color(0xFF4CAF50),
-      "quickAction": "स्कैन शुरू करें",
+      "quickAction": "Start Scan",
       "hasNotification": false,
       "route": "/soil-scan",
     },
     {
       "id": "crop_advisory",
-      "title": "फसल सलाह",
-      "description": "आपकी फसल के लिए व्यक्तिगत सुझाव और बेहतर उत्पादन की जानकारी",
+      "title": "Crop Advisory",
+      "description": "Personalized suggestions for your crop and better production information",
       "icon": "agriculture",
       "color": Color(0xFF8BC34A),
-      "quickAction": "सलाह प्राप्त करें",
+      "quickAction": "Get Advice",
       "hasNotification": true,
       "route": "/crop-advisory",
     },
     {
       "id": "market_prices",
-      "title": "बाजार भाव",
-      "description": "आज के ताजे बाजार भाव और कीमतों की जानकारी प्राप्त करें",
+      "title": "Market Prices",
+      "description": "Get today's fresh market prices and information",
       "icon": "trending_up",
       "color": Color(0xFF2196F3),
-      "quickAction": "भाव देखें",
+      "quickAction": "View Prices",
       "hasNotification": false,
       "route": "/market-prices",
     },
     {
       "id": "pest_identification",
-      "title": "कीट पहचान",
-      "description": "फसल में कीट और रोगों की पहचान करें और उपचार की जानकारी पाएं",
+      "title": "Pest Identification",
+      "description": "Identify pests and diseases in crops and get treatment information",
       "icon": "bug_report",
       "color": Color(0xFFFF9800),
-      "quickAction": "फोटो लें",
+      "quickAction": "Take Photo",
       "hasNotification": false,
       "route": "/pest-identification",
     },
@@ -81,22 +82,22 @@ class _DashboardHomeState extends State<DashboardHome> with TickerProviderStateM
     {
       "id": "1",
       "type": "scan",
-      "title": "मिट्टी स्वास्थ्य स्कैन",
-      "description": "खेत #1 की मिट्टी का विश्लेषण पूरा",
+      "title": "Soil Health Scan",
+      "description": "Analysis of soil in field #1 complete",
       "timestamp": DateTime.now().subtract(Duration(hours: 2)),
     },
     {
       "id": "2",
       "type": "voice",
-      "title": "आवाज प्रश्न",
-      "description": "गेहूं की बुआई के बारे में पूछा",
+      "title": "Voice Query",
+      "description": "Asked about wheat sowing",
       "timestamp": DateTime.now().subtract(Duration(hours: 5)),
     },
     {
       "id": "3",
       "type": "weather",
-      "title": "मौसम अपडेट",
-      "description": "अगले 3 दिन बारिश की संभावना",
+      "title": "Weather Update",
+      "description": "Possibility of rain in next 3 days",
       "timestamp": DateTime.now().subtract(Duration(days: 1)),
     },
   ];
@@ -148,7 +149,7 @@ class _DashboardHomeState extends State<DashboardHome> with TickerProviderStateM
       setState(() {
         _isListening = false;
       });
-      _showErrorSnackBar("आवाज रिकॉर्डिंग में समस्या हुई");
+      _showErrorSnackBar("Problem in voice recording");
     }
   }
 
@@ -159,14 +160,14 @@ class _DashboardHomeState extends State<DashboardHome> with TickerProviderStateM
         _isListening = false;
       });
       if (path != null) {
-        _showSuccessSnackBar("आवाज रिकॉर्ड हो गई, प्रोसेसिंग हो रही है...");
+        _showSuccessSnackBar("Voice recorded, processing...");
         Navigator.pushNamed(context, '/voice-assistant');
       }
     } catch (e) {
       setState(() {
         _isListening = false;
       });
-      _showErrorSnackBar("रिकॉर्डिंग बंद करने में समस्या हुई");
+      _showErrorSnackBar("Problem stopping recording");
     }
   }
 
@@ -174,19 +175,19 @@ class _DashboardHomeState extends State<DashboardHome> with TickerProviderStateM
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text("माइक्रोफोन की अनुमति चाहिए"),
-        content: const Text("आवाज सहायक का उपयोग करने के लिए माइक्रोफोन की अनुमति दें।"),
+        title: const Text("Microphone Permission Required"),
+        content: const Text("Allow microphone permission to use voice assistant."),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text("रद्द करें"),
+            child: const Text("Cancel"),
           ),
           TextButton(
             onPressed: () {
               Navigator.pop(context);
               openAppSettings();
             },
-            child: const Text("सेटिंग्स खोलें"),
+            child: const Text("Open Settings"),
           ),
         ],
       ),
@@ -216,7 +217,7 @@ class _DashboardHomeState extends State<DashboardHome> with TickerProviderStateM
   Future<void> _refreshDashboard() async {
     await Future.delayed(const Duration(seconds: 2));
     _checkConnectivity();
-    _showSuccessSnackBar("डैशबोर्ड अपडेट हो गया");
+    _showSuccessSnackBar("Dashboard updated");
   }
 
   void _navigateToFeature(String route) {
@@ -237,10 +238,10 @@ class _DashboardHomeState extends State<DashboardHome> with TickerProviderStateM
                 color: AppTheme.lightTheme.primaryColor,
                 size: 6.w,
               ),
-              title: const Text("टॉप पर पिन करें"),
+              title: const Text("Pin to Top"),
               onTap: () {
                 Navigator.pop(context);
-                _showSuccessSnackBar("${feature["title"]} को टॉप पर पिन कर दिया");
+                _showSuccessSnackBar("${feature["title"]} pinned to top");
               },
             ),
             ListTile(
@@ -249,10 +250,10 @@ class _DashboardHomeState extends State<DashboardHome> with TickerProviderStateM
                 color: AppTheme.lightTheme.colorScheme.onSurfaceVariant,
                 size: 6.w,
               ),
-              title: const Text("छुपाएं"),
+              title: const Text("Hide"),
               onTap: () {
                 Navigator.pop(context);
-                _showSuccessSnackBar("${feature["title"]} को छुपा दिया");
+                _showSuccessSnackBar("${feature["title"]} hidden");
               },
             ),
             ListTile(
@@ -261,7 +262,7 @@ class _DashboardHomeState extends State<DashboardHome> with TickerProviderStateM
                 color: AppTheme.lightTheme.colorScheme.onSurfaceVariant,
                 size: 6.w,
               ),
-              title: const Text("सेटिंग्स"),
+              title: const Text("Settings"),
               onTap: () {
                 Navigator.pop(context);
                 Navigator.pushNamed(context, '/profile-settings');
@@ -273,8 +274,25 @@ class _DashboardHomeState extends State<DashboardHome> with TickerProviderStateM
     );
   }
 
-  void _quickScan() {
-    Navigator.pushNamed(context, '/soil-scan');
+  Future<void> _quickScan() async {
+    // Request camera permission
+    final status = await Permission.camera.request();
+    if (status.isGranted) {
+      // Open the camera scanner
+      final ImagePicker picker = ImagePicker();
+      final XFile? image = await picker.pickImage(source: ImageSource.camera);
+      if (image != null) {
+        // For demo purposes, show a success message after "scanning"
+        _showSuccessSnackBar("Scan complete! Image path: ${image.path}");
+        // Optionally navigate to the soil-scan route after scanning
+        Navigator.pushNamed(context, '/soil-scan');
+      } else {
+        _showErrorSnackBar("Scan cancelled");
+      }
+    } else {
+      _showErrorSnackBar("Camera permission denied");
+      openAppSettings();
+    }
   }
 
   @override
@@ -287,7 +305,7 @@ class _DashboardHomeState extends State<DashboardHome> with TickerProviderStateM
             StatusBarWidget(
               isOnline: _isOnline,
               networkType: _isOnline ? "4G" : null,
-              lastSync: _isOnline ? "अभी" : "2 घंटे पहले",
+              lastSync: _isOnline ? "Now" : "2 hours ago",
             ),
             Expanded(
               child: RefreshIndicator(
@@ -298,8 +316,8 @@ class _DashboardHomeState extends State<DashboardHome> with TickerProviderStateM
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       GreetingHeaderWidget(
-                        farmerName: "रितेश कुमार",
-                        location: "लांडरां, पंजाब",
+                        farmerName: "Ritesh Kumar",
+                        location: "Landran, Punjab",
                       ),
                       SizedBox(height: 2.h),
 
@@ -316,7 +334,7 @@ class _DashboardHomeState extends State<DashboardHome> with TickerProviderStateM
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "कृषि सेवाएं",
+                              "Agriculture Services",
                               style: AppTheme.lightTheme.textTheme.titleMedium?.copyWith(
                                 fontWeight: FontWeight.w600,
                               ),
@@ -388,7 +406,7 @@ class _DashboardHomeState extends State<DashboardHome> with TickerProviderStateM
                   : AppTheme.lightTheme.colorScheme.onSurfaceVariant,
               size: 6.w,
             ),
-            text: "होम",
+            text: "Home",
           ),
           Tab(
             icon: CustomIconWidget(
@@ -398,7 +416,7 @@ class _DashboardHomeState extends State<DashboardHome> with TickerProviderStateM
                   : AppTheme.lightTheme.colorScheme.onSurfaceVariant,
               size: 6.w,
             ),
-            text: "समुदाय",
+            text: "Community",
           ),
           Tab(
             icon: CustomIconWidget(
@@ -408,7 +426,7 @@ class _DashboardHomeState extends State<DashboardHome> with TickerProviderStateM
                   : AppTheme.lightTheme.colorScheme.onSurfaceVariant,
               size: 6.w,
             ),
-            text: "सहायक",
+            text: "Assistant",
           ),
           Tab(
             icon: CustomIconWidget(
@@ -418,7 +436,7 @@ class _DashboardHomeState extends State<DashboardHome> with TickerProviderStateM
                   : AppTheme.lightTheme.colorScheme.onSurfaceVariant,
               size: 6.w,
             ),
-            text: "प्रोफाइल",
+            text: "Profile",
           ),
         ],
       ),

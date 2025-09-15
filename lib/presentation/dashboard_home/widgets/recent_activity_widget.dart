@@ -25,7 +25,7 @@ class RecentActivityWidget extends StatelessWidget {
             ),
             SizedBox(height: 2.h),
             Text(
-              "कोई हाल की गतिविधि नहीं",
+              "No recent activity",
               style: AppTheme.lightTheme.textTheme.bodyMedium?.copyWith(
                 color: AppTheme.lightTheme.colorScheme.onSurfaceVariant,
               ),
@@ -43,7 +43,7 @@ class RecentActivityWidget extends StatelessWidget {
           child: Row(
             children: [
               Text(
-                "हाल की गतिविधि",
+                "Recent Activity",
                 style: AppTheme.lightTheme.textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.w600,
                 ),
@@ -54,7 +54,7 @@ class RecentActivityWidget extends StatelessWidget {
                   // Navigate to full activity history
                 },
                 child: Text(
-                  "सभी देखें",
+                  "View All",
                   style: AppTheme.lightTheme.textTheme.labelMedium?.copyWith(
                     color: AppTheme.lightTheme.primaryColor,
                   ),
@@ -109,7 +109,7 @@ class RecentActivityWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  activity["title"] as String? ?? "गतिविधि",
+                  activity["title"] as String? ?? "Activity",
                   style: AppTheme.lightTheme.textTheme.bodyMedium?.copyWith(
                     fontWeight: FontWeight.w500,
                   ),
@@ -118,7 +118,7 @@ class RecentActivityWidget extends StatelessWidget {
                 ),
                 SizedBox(height: 0.5.h),
                 Text(
-                  activity["description"] as String? ?? "विवरण उपलब्ध नहीं",
+                  activity["description"] as String? ?? "Description not available",
                   style: AppTheme.lightTheme.textTheme.bodySmall?.copyWith(
                     color: AppTheme.lightTheme.colorScheme.onSurfaceVariant,
                   ),
@@ -180,13 +180,13 @@ class RecentActivityWidget extends StatelessWidget {
     final difference = now.difference(timestamp);
 
     if (difference.inMinutes < 1) {
-      return "अभी";
+      return "Now";
     } else if (difference.inMinutes < 60) {
-      return "${difference.inMinutes}मि पहले";
+      return "${difference.inMinutes} min ago";
     } else if (difference.inHours < 24) {
-      return "${difference.inHours}घं पहले";
+      return "${difference.inHours} hr ago";
     } else {
-      return "${difference.inDays}दिन पहले";
+      return "${difference.inDays} days ago";
     }
   }
 }

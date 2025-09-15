@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-
 import '../../core/app_export.dart';
 import './widgets/category_tabs_widget.dart';
 import './widgets/location_selector_widget.dart';
@@ -19,7 +18,6 @@ class _MarketPricesState extends State<MarketPrices>
     with TickerProviderStateMixin {
   final TextEditingController _searchController = TextEditingController();
   final PageController _pageController = PageController();
-
   String _selectedCategory = 'All';
   String _currentLocation = 'Delhi Mandi, Delhi';
   bool _hasActiveFilters = false;
@@ -42,133 +40,253 @@ class _MarketPricesState extends State<MarketPrices>
       "id": 1,
       "name": "Wheat",
       "variety": "HD-2967 (Common)",
-      "currentPrice": 2150.0,
+      "currentPrice": 2915.0,
       "unit": "quintal",
-      "priceChange": 2.5,
+      "priceChange": 35.0,
       "lastUpdated": DateTime.now().subtract(Duration(minutes: 15)),
       "category": "Grains",
-      "image":
-          "https://images.pexels.com/photos/4110256/pexels-photo-4110256.jpeg?auto=compress&cs=tinysrgb&w=400",
+      "image": "https://images.pexels.com/photos/4110256/pexels-photo-4110256.jpeg?auto=compress&cs=tinysrgb&w=400",
       "market": "Delhi Mandi",
       "priceHistory": [
-        {"date": "2024-12-13", "price": 2100.0},
-        {"date": "2024-12-12", "price": 2120.0},
-        {"date": "2024-12-11", "price": 2080.0},
-        {"date": "2024-12-10", "price": 2090.0},
-        {"date": "2024-12-09", "price": 2110.0},
-        {"date": "2024-12-08", "price": 2130.0},
-        {"date": "2024-12-07", "price": 2150.0},
-      ]
+        {"date": "2025-09-15", "price": 2915.0},
+        {"date": "2025-09-14", "price": 2880.0},
+        {"date": "2025-09-13", "price": 2850.0},
+        {"date": "2025-09-12", "price": 2920.0},
+        {"date": "2025-09-11", "price": 2890.0},
+        {"date": "2025-09-10", "price": 2860.0},
+        {"date": "2025-09-09", "price": 2940.0},
+      ],
     },
     {
       "id": 2,
       "name": "Rice",
       "variety": "Basmati 1121",
-      "currentPrice": 4500.0,
+      "currentPrice": 4800.0,
       "unit": "quintal",
-      "priceChange": -1.2,
+      "priceChange": -120.0,
       "lastUpdated": DateTime.now().subtract(Duration(minutes: 30)),
       "category": "Grains",
-      "image":
-          "https://images.pexels.com/photos/1393382/pexels-photo-1393382.jpeg?auto=compress&cs=tinysrgb&w=400",
+      "image": "https://images.pexels.com/photos/1393382/pexels-photo-1393382.jpeg?auto=compress&cs=tinysrgb&w=400",
       "market": "Delhi Mandi",
       "priceHistory": [
-        {"date": "2024-12-13", "price": 4500.0},
-        {"date": "2024-12-12", "price": 4520.0},
-        {"date": "2024-12-11", "price": 4480.0},
-        {"date": "2024-12-10", "price": 4510.0},
-        {"date": "2024-12-09", "price": 4490.0},
-        {"date": "2024-12-08", "price": 4530.0},
-        {"date": "2024-12-07", "price": 4560.0},
-      ]
+        {"date": "2025-09-15", "price": 4800.0},
+        {"date": "2025-09-14", "price": 4920.0},
+        {"date": "2025-09-13", "price": 4850.0},
+        {"date": "2025-09-12", "price": 4780.0},
+        {"date": "2025-09-11", "price": 4900.0},
+        {"date": "2025-09-10", "price": 4750.0},
+        {"date": "2025-09-09", "price": 4820.0},
+      ],
     },
     {
       "id": 3,
       "name": "Tomato",
       "variety": "Hybrid Round",
-      "currentPrice": 35.0,
-      "unit": "kg",
-      "priceChange": 15.8,
+      "currentPrice": 3333.0,
+      "unit": "quintal",
+      "priceChange": 253.0,
       "lastUpdated": DateTime.now().subtract(Duration(hours: 1)),
       "category": "Vegetables",
-      "image":
-          "https://images.pexels.com/photos/1327838/pexels-photo-1327838.jpeg?auto=compress&cs=tinysrgb&w=400",
-      "market": "Delhi Mandi",
+      "image": "https://images.pexels.com/photos/1327838/pexels-photo-1327838.jpeg?auto=compress&cs=tinysrgb&w=400",
+      "market": "Azadpur Mandi",
       "priceHistory": [
-        {"date": "2024-12-13", "price": 35.0},
-        {"date": "2024-12-12", "price": 32.0},
-        {"date": "2024-12-11", "price": 28.0},
-        {"date": "2024-12-10", "price": 30.0},
-        {"date": "2024-12-09", "price": 25.0},
-        {"date": "2024-12-08", "price": 22.0},
-        {"date": "2024-12-07", "price": 20.0},
-      ]
+        {"date": "2025-09-15", "price": 3333.0},
+        {"date": "2025-09-14", "price": 3080.0},
+        {"date": "2025-09-13", "price": 2900.0},
+        {"date": "2025-09-12", "price": 3200.0},
+        {"date": "2025-09-11", "price": 3500.0},
+        {"date": "2025-09-10", "price": 3150.0},
+        {"date": "2025-09-09", "price": 2800.0},
+      ],
     },
     {
       "id": 4,
       "name": "Onion",
       "variety": "Red Nashik",
-      "currentPrice": 28.0,
-      "unit": "kg",
-      "priceChange": -5.4,
+      "currentPrice": 2000.0,
+      "unit": "quintal",
+      "priceChange": -180.0,
       "lastUpdated": DateTime.now().subtract(Duration(hours: 2)),
       "category": "Vegetables",
-      "image":
-          "https://images.pexels.com/photos/1323712/pexels-photo-1323712.jpeg?auto=compress&cs=tinysrgb&w=400",
-      "market": "Delhi Mandi",
+      "image": "https://images.pexels.com/photos/1323712/pexels-photo-1323712.jpeg?auto=compress&cs=tinysrgb&w=400",
+      "market": "Azadpur Mandi",
       "priceHistory": [
-        {"date": "2024-12-13", "price": 28.0},
-        {"date": "2024-12-12", "price": 30.0},
-        {"date": "2024-12-11", "price": 32.0},
-        {"date": "2024-12-10", "price": 29.0},
-        {"date": "2024-12-09", "price": 31.0},
-        {"date": "2024-12-08", "price": 33.0},
-        {"date": "2024-12-07", "price": 35.0},
-      ]
+        {"date": "2025-09-15", "price": 2000.0},
+        {"date": "2025-09-14", "price": 2180.0},
+        {"date": "2025-09-13", "price": 2250.0},
+        {"date": "2025-09-12", "price": 2100.0},
+        {"date": "2025-09-11", "price": 2300.0},
+        {"date": "2025-09-10", "price": 2050.0},
+        {"date": "2025-09-09", "price": 2400.0},
+      ],
     },
     {
       "id": 5,
       "name": "Apple",
       "variety": "Shimla Red Delicious",
-      "currentPrice": 120.0,
-      "unit": "kg",
-      "priceChange": 3.2,
+      "currentPrice": 14000.0,
+      "unit": "quintal",
+      "priceChange": 500.0,
       "lastUpdated": DateTime.now().subtract(Duration(hours: 3)),
       "category": "Fruits",
-      "image":
-          "https://images.pexels.com/photos/102104/pexels-photo-102104.jpeg?auto=compress&cs=tinysrgb&w=400",
-      "market": "Delhi Mandi",
+      "image": "https://images.pexels.com/photos/102104/pexels-photo-102104.jpeg?auto=compress&cs=tinysrgb&w=400",
+      "market": "Azadpur Mandi",
       "priceHistory": [
-        {"date": "2024-12-13", "price": 120.0},
-        {"date": "2024-12-12", "price": 118.0},
-        {"date": "2024-12-11", "price": 115.0},
-        {"date": "2024-12-10", "price": 117.0},
-        {"date": "2024-12-09", "price": 114.0},
-        {"date": "2024-12-08", "price": 112.0},
-        {"date": "2024-12-07", "price": 110.0},
-      ]
+        {"date": "2025-09-15", "price": 14000.0},
+        {"date": "2025-09-14", "price": 13500.0},
+        {"date": "2025-09-13", "price": 13200.0},
+        {"date": "2025-09-12", "price": 13800.0},
+        {"date": "2025-09-11", "price": 13600.0},
+        {"date": "2025-09-10", "price": 13000.0},
+        {"date": "2025-09-09", "price": 13400.0},
+      ],
     },
     {
       "id": 6,
       "name": "Turmeric",
       "variety": "Erode Finger",
-      "currentPrice": 8500.0,
+      "currentPrice": 16500.0,
       "unit": "quintal",
-      "priceChange": 7.8,
+      "priceChange": 850.0,
       "lastUpdated": DateTime.now().subtract(Duration(hours: 4)),
       "category": "Spices",
-      "image":
-          "https://images.pexels.com/photos/4198015/pexels-photo-4198015.jpeg?auto=compress&cs=tinysrgb&w=400",
+      "image": "https://images.pexels.com/photos/4198015/pexels-photo-4198015.jpeg?auto=compress&cs=tinysrgb&w=400",
       "market": "Delhi Mandi",
       "priceHistory": [
-        {"date": "2024-12-13", "price": 8500.0},
-        {"date": "2024-12-12", "price": 8200.0},
-        {"date": "2024-12-11", "price": 8000.0},
-        {"date": "2024-12-10", "price": 8100.0},
-        {"date": "2024-12-09", "price": 7900.0},
-        {"date": "2024-12-08", "price": 7800.0},
-        {"date": "2024-12-07", "price": 7600.0},
-      ]
+        {"date": "2025-09-15", "price": 16500.0},
+        {"date": "2025-09-14", "price": 15650.0},
+        {"date": "2025-09-13", "price": 15800.0},
+        {"date": "2025-09-12", "price": 16200.0},
+        {"date": "2025-09-11", "price": 15900.0},
+        {"date": "2025-09-10", "price": 15400.0},
+        {"date": "2025-09-09", "price": 15600.0},
+      ],
+    },
+    {
+      "id": 7,
+      "name": "Potato",
+      "variety": "Jyoti",
+      "currentPrice": 1800.0,
+      "unit": "quintal",
+      "priceChange": 75.0,
+      "lastUpdated": DateTime.now().subtract(Duration(minutes: 45)),
+      "category": "Vegetables",
+      "image": "https://images.pexels.com/photos/144248/potatoes-vegetables-erdfrucht-bio-144248.jpeg?auto=compress&cs=tinysrgb&w=400",
+      "market": "Azadpur Mandi",
+      "priceHistory": [
+        {"date": "2025-09-15", "price": 1800.0},
+        {"date": "2025-09-14", "price": 1725.0},
+        {"date": "2025-09-13", "price": 1750.0},
+        {"date": "2025-09-12", "price": 1820.0},
+        {"date": "2025-09-11", "price": 1700.0},
+        {"date": "2025-09-10", "price": 1780.0},
+        {"date": "2025-09-09", "price": 1650.0},
+      ],
+    },
+    {
+      "id": 8,
+      "name": "Mustard Seed",
+      "variety": "Black (Rai)",
+      "currentPrice": 6800.0,
+      "unit": "quintal",
+      "priceChange": 200.0,
+      "lastUpdated": DateTime.now().subtract(Duration(hours: 5)),
+      "category": "Oil Seeds",
+      "image": "https://images.pexels.com/photos/4198719/pexels-photo-4198719.jpeg?auto=compress&cs=tinysrgb&w=400",
+      "market": "Delhi Mandi",
+      "priceHistory": [
+        {"date": "2025-09-15", "price": 6800.0},
+        {"date": "2025-09-14", "price": 6600.0},
+        {"date": "2025-09-13", "price": 6750.0},
+        {"date": "2025-09-12", "price": 6550.0},
+        {"date": "2025-09-11", "price": 6700.0},
+        {"date": "2025-09-10", "price": 6450.0},
+        {"date": "2025-09-09", "price": 6650.0},
+      ],
+    },
+    {
+      "id": 9,
+      "name": "Chana Dal",
+      "variety": "Bold",
+      "currentPrice": 9200.0,
+      "unit": "quintal",
+      "priceChange": -150.0,
+      "lastUpdated": DateTime.now().subtract(Duration(hours: 1)),
+      "category": "Pulses",
+      "image": "https://images.pexels.com/photos/4518656/pexels-photo-4518656.jpeg?auto=compress&cs=tinysrgb&w=400",
+      "market": "Delhi Mandi",
+      "priceHistory": [
+        {"date": "2025-09-15", "price": 9200.0},
+        {"date": "2025-09-14", "price": 9350.0},
+        {"date": "2025-09-13", "price": 9180.0},
+        {"date": "2025-09-12", "price": 9400.0},
+        {"date": "2025-09-11", "price": 9250.0},
+        {"date": "2025-09-10", "price": 9100.0},
+        {"date": "2025-09-09", "price": 9300.0},
+      ],
+    },
+    {
+      "id": 10,
+      "name": "Banana",
+      "variety": "Robusta",
+      "currentPrice": 2500.0,
+      "unit": "quintal",
+      "priceChange": 125.0,
+      "lastUpdated": DateTime.now().subtract(Duration(minutes: 20)),
+      "category": "Fruits",
+      "image": "https://images.pexels.com/photos/61127/pexels-photo-61127.jpeg?auto=compress&cs=tinysrgb&w=400",
+      "market": "Azadpur Mandi",
+      "priceHistory": [
+        {"date": "2025-09-15", "price": 2500.0},
+        {"date": "2025-09-14", "price": 2375.0},
+        {"date": "2025-09-13", "price": 2400.0},
+        {"date": "2025-09-12", "price": 2450.0},
+        {"date": "2025-09-11", "price": 2350.0},
+        {"date": "2025-09-10", "price": 2475.0},
+        {"date": "2025-09-09", "price": 2300.0},
+      ],
+    },
+    {
+      "id": 11,
+      "name": "Cauliflower",
+      "variety": "Snowball-16",
+      "currentPrice": 1200.0,
+      "unit": "quintal",
+      "priceChange": -80.0,
+      "lastUpdated": DateTime.now().subtract(Duration(minutes: 40)),
+      "category": "Vegetables",
+      "image": "https://images.pexels.com/photos/1458694/pexels-photo-1458694.jpeg?auto=compress&cs=tinysrgb&w=400",
+      "market": "Azadpur Mandi",
+      "priceHistory": [
+        {"date": "2025-09-15", "price": 1200.0},
+        {"date": "2025-09-14", "price": 1280.0},
+        {"date": "2025-09-13", "price": 1350.0},
+        {"date": "2025-09-12", "price": 1150.0},
+        {"date": "2025-09-11", "price": 1300.0},
+        {"date": "2025-09-10", "price": 1250.0},
+        {"date": "2025-09-09", "price": 1400.0},
+      ],
+    },
+    {
+      "id": 12,
+      "name": "Coriander",
+      "variety": "Eagle (Dhaniya)",
+      "currentPrice": 18500.0,
+      "unit": "quintal",
+      "priceChange": 1200.0,
+      "lastUpdated": DateTime.now().subtract(Duration(hours: 6)),
+      "category": "Spices",
+      "image": "https://images.pexels.com/photos/4198523/pexels-photo-4198523.jpeg?auto=compress&cs=tinysrgb&w=400",
+      "market": "Delhi Mandi",
+      "priceHistory": [
+        {"date": "2025-09-15", "price": 18500.0},
+        {"date": "2025-09-14", "price": 17300.0},
+        {"date": "2025-09-13", "price": 17800.0},
+        {"date": "2025-09-12", "price": 17500.0},
+        {"date": "2025-09-11", "price": 18200.0},
+        {"date": "2025-09-10", "price": 16900.0},
+        {"date": "2025-09-09", "price": 17600.0},
+      ],
     },
   ];
 
@@ -185,10 +303,10 @@ class _MarketPricesState extends State<MarketPrices>
       final query = _searchController.text.toLowerCase();
       filtered = filtered
           .where((item) =>
-              (item['name'] as String?)?.toLowerCase().contains(query) ==
-                  true ||
-              (item['variety'] as String?)?.toLowerCase().contains(query) ==
-                  true)
+      (item['name'] as String?)?.toLowerCase().contains(query) ==
+          true ||
+          (item['variety'] as String?)?.toLowerCase().contains(query) ==
+              true)
           .toList();
     }
 
@@ -214,10 +332,8 @@ class _MarketPricesState extends State<MarketPrices>
     setState(() {
       _isLoading = true;
     });
-
     // Simulate API call
     await Future.delayed(const Duration(seconds: 2));
-
     setState(() {
       _isLoading = false;
     });
@@ -278,30 +394,30 @@ class _MarketPricesState extends State<MarketPrices>
                   'Agricultural Market, UP',
                 ]
                     .map((location) => ListTile(
-                          leading: CustomIconWidget(
-                            iconName: 'location_on',
-                            color: AppTheme.lightTheme.colorScheme.primary,
-                            size: 20,
-                          ),
-                          title: Text(
-                            location,
-                            style: AppTheme.lightTheme.textTheme.bodyLarge,
-                          ),
-                          trailing: _currentLocation == location
-                              ? CustomIconWidget(
-                                  iconName: 'check_circle',
-                                  color:
-                                      AppTheme.lightTheme.colorScheme.primary,
-                                  size: 20,
-                                )
-                              : null,
-                          onTap: () {
-                            setState(() {
-                              _currentLocation = location;
-                            });
-                            Navigator.pop(context);
-                          },
-                        ))
+                  leading: CustomIconWidget(
+                    iconName: 'location_on',
+                    color: AppTheme.lightTheme.colorScheme.primary,
+                    size: 20,
+                  ),
+                  title: Text(
+                    location,
+                    style: AppTheme.lightTheme.textTheme.bodyLarge,
+                  ),
+                  trailing: _currentLocation == location
+                      ? CustomIconWidget(
+                    iconName: 'check_circle',
+                    color:
+                    AppTheme.lightTheme.colorScheme.primary,
+                    size: 20,
+                  )
+                      : null,
+                  onTap: () {
+                    setState(() {
+                      _currentLocation = location;
+                    });
+                    Navigator.pop(context);
+                  },
+                ))
                     .toList(),
               ),
             ),
@@ -365,23 +481,23 @@ class _MarketPricesState extends State<MarketPrices>
                     Text(
                       'Price Range',
                       style:
-                          AppTheme.lightTheme.textTheme.titleMedium?.copyWith(
+                      AppTheme.lightTheme.textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.w600,
                       ),
                     ),
                     SizedBox(height: 2.h),
                     RangeSlider(
-                      values: const RangeValues(0, 10000),
-                      max: 10000,
-                      divisions: 100,
-                      labels: const RangeLabels('₹0', '₹10,000'),
+                      values: const RangeValues(0, 20000),
+                      max: 20000,
+                      divisions: 200,
+                      labels: const RangeLabels('₹0', '₹20,000'),
                       onChanged: (values) {},
                     ),
                     SizedBox(height: 3.h),
                     Text(
                       'Market Distance',
                       style:
-                          AppTheme.lightTheme.textTheme.titleMedium?.copyWith(
+                      AppTheme.lightTheme.textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -395,21 +511,21 @@ class _MarketPricesState extends State<MarketPrices>
                         'Any Distance'
                       ]
                           .map((distance) => FilterChip(
-                                label: Text(distance),
-                                selected: false,
-                                onSelected: (selected) {
-                                  setState(() {
-                                    _hasActiveFilters = true;
-                                  });
-                                },
-                              ))
+                        label: Text(distance),
+                        selected: false,
+                        onSelected: (selected) {
+                          setState(() {
+                            _hasActiveFilters = true;
+                          });
+                        },
+                      ))
                           .toList(),
                     ),
                     SizedBox(height: 3.h),
                     Text(
                       'Sort By',
                       style:
-                          AppTheme.lightTheme.textTheme.titleMedium?.copyWith(
+                      AppTheme.lightTheme.textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -422,15 +538,15 @@ class _MarketPricesState extends State<MarketPrices>
                         'Alphabetical'
                       ]
                           .map((option) => RadioListTile<String>(
-                                title: Text(option),
-                                value: option,
-                                groupValue: null,
-                                onChanged: (value) {
-                                  setState(() {
-                                    _hasActiveFilters = true;
-                                  });
-                                },
-                              ))
+                        title: Text(option),
+                        value: option,
+                        groupValue: null,
+                        onChanged: (value) {
+                          setState(() {
+                            _hasActiveFilters = true;
+                          });
+                        },
+                      ))
                           .toList(),
                     ),
                   ],
@@ -501,7 +617,7 @@ class _MarketPricesState extends State<MarketPrices>
                     PriceCardWidget(
                       cropData: cropData,
                       isFavorite:
-                          _favoriteCrops.contains(cropData['id'].toString()),
+                      _favoriteCrops.contains(cropData['id'].toString()),
                       onFavoriteToggle: () =>
                           _toggleFavorite(cropData['id'] as int),
                     ),
@@ -539,7 +655,7 @@ class _MarketPricesState extends State<MarketPrices>
                                           .lightTheme.textTheme.bodySmall,
                                     ),
                                     Text(
-                                      '₹${(cropData['currentPrice'] as double? ?? 0.0 * 1.1).toStringAsFixed(2)}',
+                                      '₹${((cropData['currentPrice'] as double? ?? 0.0) * 1.08).toStringAsFixed(2)}',
                                       style: AppTheme
                                           .lightTheme.textTheme.titleMedium
                                           ?.copyWith(
@@ -561,7 +677,7 @@ class _MarketPricesState extends State<MarketPrices>
                                           .lightTheme.textTheme.bodySmall,
                                     ),
                                     Text(
-                                      '₹${(cropData['currentPrice'] as double? ?? 0.0 * 0.9).toStringAsFixed(2)}',
+                                      '₹${((cropData['currentPrice'] as double? ?? 0.0) * 0.92).toStringAsFixed(2)}',
                                       style: AppTheme
                                           .lightTheme.textTheme.titleMedium
                                           ?.copyWith(
@@ -659,7 +775,6 @@ class _MarketPricesState extends State<MarketPrices>
                 );
               },
             ),
-
             // Search and Filter
             SearchFilterWidget(
               searchController: _searchController,
@@ -667,7 +782,6 @@ class _MarketPricesState extends State<MarketPrices>
               onFilter: _showFilterBottomSheet,
               hasActiveFilters: _hasActiveFilters,
             ),
-
             // Category Tabs
             CategoryTabsWidget(
               categories: _categories,
@@ -678,64 +792,62 @@ class _MarketPricesState extends State<MarketPrices>
                 });
               },
             ),
-
             SizedBox(height: 1.h),
-
             // Price List
             Expanded(
               child: _isLoading
                   ? Center(
-                      child: CircularProgressIndicator(
-                        color: AppTheme.lightTheme.colorScheme.primary,
-                      ),
-                    )
+                child: CircularProgressIndicator(
+                  color: AppTheme.lightTheme.colorScheme.primary,
+                ),
+              )
                   : filteredData.isEmpty
-                      ? Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              CustomIconWidget(
-                                iconName: 'search_off',
-                                color: AppTheme
-                                    .lightTheme.colorScheme.onSurfaceVariant,
-                                size: 48,
-                              ),
-                              SizedBox(height: 2.h),
-                              Text(
-                                'No crops found',
-                                style: AppTheme.lightTheme.textTheme.titleMedium
-                                    ?.copyWith(
-                                  color: AppTheme
-                                      .lightTheme.colorScheme.onSurfaceVariant,
-                                ),
-                              ),
-                              SizedBox(height: 1.h),
-                              Text(
-                                'Try adjusting your search or filters',
-                                style: AppTheme.lightTheme.textTheme.bodyMedium
-                                    ?.copyWith(
-                                  color: AppTheme
-                                      .lightTheme.colorScheme.onSurfaceVariant,
-                                ),
-                              ),
-                            ],
-                          ),
-                        )
-                      : ListView.builder(
-                          padding: EdgeInsets.only(bottom: 2.h),
-                          itemCount: filteredData.length,
-                          itemBuilder: (context, index) {
-                            final cropData = filteredData[index];
-                            return PriceCardWidget(
-                              cropData: cropData,
-                              isFavorite: _favoriteCrops
-                                  .contains(cropData['id'].toString()),
-                              onTap: () => _showPriceDetail(index),
-                              onFavoriteToggle: () =>
-                                  _toggleFavorite(cropData['id'] as int),
-                            );
-                          },
-                        ),
+                  ? Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CustomIconWidget(
+                      iconName: 'search_off',
+                      color: AppTheme
+                          .lightTheme.colorScheme.onSurfaceVariant,
+                      size: 48,
+                    ),
+                    SizedBox(height: 2.h),
+                    Text(
+                      'No crops found',
+                      style: AppTheme.lightTheme.textTheme.titleMedium
+                          ?.copyWith(
+                        color: AppTheme
+                            .lightTheme.colorScheme.onSurfaceVariant,
+                      ),
+                    ),
+                    SizedBox(height: 1.h),
+                    Text(
+                      'Try adjusting your search or filters',
+                      style: AppTheme.lightTheme.textTheme.bodyMedium
+                          ?.copyWith(
+                        color: AppTheme
+                            .lightTheme.colorScheme.onSurfaceVariant,
+                      ),
+                    ),
+                  ],
+                ),
+              )
+                  : ListView.builder(
+                padding: EdgeInsets.only(bottom: 2.h),
+                itemCount: filteredData.length,
+                itemBuilder: (context, index) {
+                  final cropData = filteredData[index];
+                  return PriceCardWidget(
+                    cropData: cropData,
+                    isFavorite: _favoriteCrops
+                        .contains(cropData['id'].toString()),
+                    onTap: () => _showPriceDetail(index),
+                    onFavoriteToggle: () =>
+                        _toggleFavorite(cropData['id'] as int),
+                  );
+                },
+              ),
             ),
           ],
         ),

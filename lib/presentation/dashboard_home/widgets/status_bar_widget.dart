@@ -26,7 +26,7 @@ class StatusBarWidget extends StatelessWidget {
         border: Border(
           bottom: BorderSide(
             color:
-                AppTheme.lightTheme.colorScheme.outline.withValues(alpha: 0.2),
+            AppTheme.lightTheme.colorScheme.outline.withValues(alpha: 0.2),
             width: 1,
           ),
         ),
@@ -42,7 +42,7 @@ class StatusBarWidget extends StatelessWidget {
           ),
           SizedBox(width: 2.w),
           Text(
-            isOnline ? "ऑनलाइन" : "ऑफलाइन",
+            isOnline ? "Online" : "Offline",
             style: AppTheme.lightTheme.textTheme.bodySmall?.copyWith(
               color: isOnline
                   ? AppTheme.lightTheme.primaryColor
@@ -70,7 +70,7 @@ class StatusBarWidget extends StatelessWidget {
             ),
             SizedBox(width: 2.w),
             Text(
-              "अंतिम सिंक: $lastSync",
+              "Last Sync: $lastSync",
               style: AppTheme.lightTheme.textTheme.bodySmall?.copyWith(
                 color: AppTheme.lightTheme.colorScheme.onSurfaceVariant,
                 fontSize: 13.sp,

@@ -71,7 +71,7 @@ class FeatureCardWidget extends StatelessWidget {
 
               // Title
               Text(
-                feature["title"] as String? ?? "सुविधा",
+                feature["title"] as String? ?? "Feature",
                 style: AppTheme.lightTheme.textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.w600,
                 ),
@@ -84,7 +84,7 @@ class FeatureCardWidget extends StatelessWidget {
               // Description
               Text(
                 feature["description"] as String? ??
-                    "विवरण उपलब्ध नहीं",
+                    "Description not available",
                 style: AppTheme.lightTheme.textTheme.bodySmall?.copyWith(
                   color:
                   AppTheme.lightTheme.colorScheme.onSurfaceVariant,
@@ -109,7 +109,7 @@ class FeatureCardWidget extends StatelessWidget {
                     ),
                     child: Text(
                       feature["quickAction"] as String? ??
-                          "तुरंत शुरू करें",
+                          "Start Now",
                       style:
                       AppTheme.lightTheme.textTheme.labelMedium?.copyWith(
                         color: baseColor,
@@ -128,4 +128,3 @@ class FeatureCardWidget extends StatelessWidget {
     );
   }
 }
-
