@@ -93,7 +93,7 @@ class ChatBubbleWidget extends StatelessWidget {
                                 ),
                                 SizedBox(width: 1.w),
                                 Text(
-                                  isPlaying ? 'रुकें' : 'सुनें',
+                                  isPlaying ? 'wait' : 'listen',
                                   style: AppTheme.lightTheme.textTheme.bodySmall
                                       ?.copyWith(
                                     color: AppTheme.lightTheme.primaryColor,
@@ -153,11 +153,11 @@ class ChatBubbleWidget extends StatelessWidget {
     final difference = now.difference(time);
 
     if (difference.inMinutes < 1) {
-      return 'अभी';
+      return 'Now';
     } else if (difference.inHours < 1) {
-      return '${difference.inMinutes} मिनट पहले';
+      return '${difference.inMinutes} minutes ago';
     } else if (difference.inDays < 1) {
-      return '${difference.inHours} घंटे पहले';
+      return '${difference.inHours} hours ago';
     } else {
       return '${time.day}/${time.month}/${time.year}';
     }

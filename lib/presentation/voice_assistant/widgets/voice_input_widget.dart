@@ -221,7 +221,7 @@ class _VoiceInputWidgetState extends State<VoiceInputWidget>
 
           // Status text
           Text(
-            widget.isListening ? 'सुन रहा हूं... बोलिए' : 'माइक दबाकर बोलें',
+            widget.isListening ? 'I am listening... tell me' : 'press the mic and speak',
             style: AppTheme.lightTheme.textTheme.bodyLarge?.copyWith(
               color: AppTheme.lightTheme.colorScheme.onSurfaceVariant,
               fontWeight: FontWeight.w500,
@@ -248,7 +248,7 @@ class _VoiceInputWidgetState extends State<VoiceInputWidget>
                   SizedBox(width: 2.w),
                   Flexible(
                     child: Text(
-                      'माइक्रोफोन की अनुमति दें',
+                      'Allow microphone',
                       style: AppTheme.lightTheme.textTheme.bodySmall?.copyWith(
                         color: AppTheme.lightTheme.colorScheme.error,
                       ),

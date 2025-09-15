@@ -10,7 +10,7 @@ class LanguageToggleButton extends StatefulWidget {
   const LanguageToggleButton({
     Key? key,
     required this.onLanguageChanged,
-    this.currentLanguage = 'hi',
+    this.currentLanguage = 'en', // Changed default to English
   }) : super(key: key);
 
   @override
@@ -21,7 +21,7 @@ class _LanguageToggleButtonState extends State<LanguageToggleButton>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _rotationAnimation;
-  String _selectedLanguage = 'hi';
+  String _selectedLanguage = 'en'; // Changed default to English
 
   @override
   void initState() {
@@ -43,7 +43,7 @@ class _LanguageToggleButtonState extends State<LanguageToggleButton>
   void _toggleLanguage() {
     _animationController.forward().then((_) {
       setState(() {
-        _selectedLanguage = _selectedLanguage == 'hi' ? 'en' : 'hi';
+        _selectedLanguage = _selectedLanguage == 'en' ? 'hi' : 'en'; // Changed order
       });
       widget.onLanguageChanged(_selectedLanguage);
       _animationController.reverse();
@@ -51,11 +51,21 @@ class _LanguageToggleButtonState extends State<LanguageToggleButton>
   }
 
   String get _languageText {
-    return _selectedLanguage == 'hi' ? 'हिं' : 'EN';
+    return _selectedLanguage == 'en' ? 'EN' : 'हिं'; // Changed order
   }
 
   String get _fullLanguageName {
-    return _selectedLanguage == 'hi' ? 'हिंदी' : 'English';
+    return _selectedLanguage == 'en' ? 'English' : 'हिंदी'; // Changed order
+  }
+
+  @override
+  void didUpdateWidget(LanguageToggleButton oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.currentLanguage != widget.currentLanguage) {
+      setState(() {
+        _selectedLanguage = widget.currentLanguage;
+      });
+    }
   }
 
   @override

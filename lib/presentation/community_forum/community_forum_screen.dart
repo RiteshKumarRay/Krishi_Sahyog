@@ -13,48 +13,132 @@ class CommunityForumScreen extends StatefulWidget {
 class _CommunityForumScreenState extends State<CommunityForumScreen> {
   List<ForumPost> posts = [
     ForumPost(
-      username: "राम कुमार शर्मा",
+      username: "Ram Kumar Sharma",
       avatarColor: AppTheme.lightTheme.colorScheme.primary,
-      title: "मिरची की फसल में रोग नियंत्रण के उपाय",
+      title: "Measures for Disease Control in Chili Crop",
       timestamp: DateTime.now().subtract(const Duration(hours: 1)),
       description:
-      "मेरी मिर्ची की फसल में पत्ती पीली पड़ रही है, क्या कोई सुझाव है?",
+      "In my chili crop, the leaves are turning yellow, any suggestions?",
       repliesCount: 4,
     ),
     ForumPost(
-      username: "गीता देवी",
+      username: "Geeta Devi",
       avatarColor: AppTheme.lightTheme.colorScheme.secondary,
-      title: "धान की सही कटाई का समय",
+      title: "Right Time for Rice Harvesting",
       timestamp: DateTime.now().subtract(const Duration(hours: 6)),
       description:
-      "मुझे अपने धान की फसल के लिए कटाई के सही समय की जानकारी चाहिए।",
+      "I need information on the right harvesting time for my rice crop.",
       repliesCount: 2,
     ),
     ForumPost(
-      username: "अजय वर्मा",
+      username: "Ajay Verma",
       avatarColor: AppTheme.lightTheme.colorScheme.tertiary,
-      title: "किसान सब्सिडी योजनाओं के बारे में जानकारी",
+      title: "Information about Farmer Subsidy Schemes",
       timestamp: DateTime.now().subtract(const Duration(days: 1, hours: 3)),
       description:
-      "सरकार द्वारा जारी किसान सब्सिडी योजनाओं के लाभ कैसे प्राप्त करें?",
+      "How to avail benefits of farmer subsidy schemes issued by the government?",
       repliesCount: 6,
+    ),
+    ForumPost(
+      username: "Sita Patel",
+      avatarColor: AppTheme.lightTheme.colorScheme.primary,
+      title: "Best Fertilizers for Wheat",
+      timestamp: DateTime.now().subtract(const Duration(days: 2)),
+      description:
+      "What are the best fertilizers for wheat crop?",
+      repliesCount: 3,
+    ),
+    ForumPost(
+      username: "Vikram Singh",
+      avatarColor: AppTheme.lightTheme.colorScheme.secondary,
+      title: "Irrigation Techniques",
+      timestamp: DateTime.now().subtract(const Duration(hours: 12)),
+      description:
+      "Sharing some irrigation techniques for dry areas.",
+      repliesCount: 1,
+    ),
+    ForumPost(
+      username: "Priya Mehta",
+      avatarColor: AppTheme.lightTheme.colorScheme.tertiary,
+      title: "Pest Management in Vegetables",
+      timestamp: DateTime.now().subtract(const Duration(days: 3, hours: 5)),
+      description:
+      "Tips for managing pests in vegetable gardens.",
+      repliesCount: 5,
     ),
   ];
 
   String formatTimestamp(DateTime date) {
     final now = DateTime.now();
     final diff = now.difference(date);
-    if (diff.inMinutes < 1) return "अभी";
-    if (diff.inMinutes < 60) return "${diff.inMinutes} मिनट पहले";
-    if (diff.inHours < 24) return "${diff.inHours} घंटे पहले";
+    if (diff.inMinutes < 1) return "Now";
+    if (diff.inMinutes < 60) return "${diff.inMinutes} min ago";
+    if (diff.inHours < 24) return "${diff.inHours} hr ago";
     return DateFormat('dd MMM yyyy').format(date);
+  }
+
+  void _showAddPostDialog() {
+    final TextEditingController titleController = TextEditingController();
+    final TextEditingController descriptionController = TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Create New Post'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: titleController,
+                decoration: const InputDecoration(hintText: "Enter title"),
+              ),
+              TextField(
+                controller: descriptionController,
+                decoration: const InputDecoration(hintText: "Enter description"),
+                maxLines: 3,
+              ),
+            ],
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: const Text('Post'),
+              onPressed: () {
+                if (titleController.text.isNotEmpty && descriptionController.text.isNotEmpty) {
+                  setState(() {
+                    posts.insert(0, ForumPost(
+                      username: "Current User",
+                      avatarColor: AppTheme.lightTheme.colorScheme.primary,
+                      title: titleController.text,
+                      description: descriptionController.text,
+                      timestamp: DateTime.now(),
+                      repliesCount: 0,
+                    ));
+                  });
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Post created successfully!')),
+                  );
+                }
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("समुदाय"),
+        title: const Text("Community"),
         backgroundColor: AppTheme.lightTheme.colorScheme.primary,
       ),
       body: ListView.separated(
@@ -81,7 +165,7 @@ class _CommunityForumScreenState extends State<CommunityForumScreen> {
                         child: Text(
                           post.username.substring(0, 1),
                           style: AppTheme.lightTheme.textTheme.titleMedium
-                              ?.copyWith(color: Colors.white),
+                              ?.copyWith(color: Colors.white, fontSize: 14),
                         ),
                       ),
                       const SizedBox(width: 12),
@@ -89,12 +173,13 @@ class _CommunityForumScreenState extends State<CommunityForumScreen> {
                         child: Text(
                           post.username,
                           style: AppTheme.lightTheme.textTheme.titleMedium
-                              ?.copyWith(fontWeight: FontWeight.w600),
+                              ?.copyWith(fontWeight: FontWeight.w600, fontSize: 14),
                         ),
                       ),
                       Text(
                         formatTimestamp(post.timestamp),
-                        style: AppTheme.lightTheme.textTheme.bodySmall,
+                        style: AppTheme.lightTheme.textTheme.bodySmall
+                            ?.copyWith(fontSize: 10),
                       ),
                     ],
                   ),
@@ -104,14 +189,15 @@ class _CommunityForumScreenState extends State<CommunityForumScreen> {
                   Text(
                     post.title,
                     style: AppTheme.lightTheme.textTheme.titleLarge
-                        ?.copyWith(fontWeight: FontWeight.bold),
+                        ?.copyWith(fontWeight: FontWeight.bold, fontSize: 16),
                   ),
                   const SizedBox(height: 8),
 
                   // Post description
                   Text(
                     post.description,
-                    style: AppTheme.lightTheme.textTheme.bodyMedium,
+                    style: AppTheme.lightTheme.textTheme.bodyMedium
+                        ?.copyWith(fontSize: 12),
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -128,9 +214,10 @@ class _CommunityForumScreenState extends State<CommunityForumScreen> {
                       ),
                       const SizedBox(width: 5),
                       Text(
-                        "${post.repliesCount} जवाब",
+                        "${post.repliesCount} replies",
                         style: AppTheme.lightTheme.textTheme.bodySmall?.copyWith(
                           color: AppTheme.lightTheme.colorScheme.primary,
+                          fontSize: 10,
                         ),
                       ),
                     ],
@@ -144,9 +231,7 @@ class _CommunityForumScreenState extends State<CommunityForumScreen> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: AppTheme.lightTheme.colorScheme.primary,
         child: const Icon(Icons.add),
-        onPressed: () {
-          // TODO: Add new post creation logic here
-        },
+        onPressed: _showAddPostDialog,
       ),
     );
   }

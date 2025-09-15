@@ -15,30 +15,30 @@ class QuickSuggestionsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final suggestions = [
       {
-        'text': 'मौसम की जानकारी',
+        'text': 'Weather Information',
         'icon': 'wb_sunny',
-        'query': 'आज का मौसम कैसा है?'
+        'query': 'how is the weather today?'
       },
       {
-        'text': 'फसल की कीमत',
+        'text': 'price of crop',
         'icon': 'trending_up',
-        'query': 'गेहूं की आज की कीमत क्या है?'
+        'query': 'what is the price of wheat today?'
       },
       {
-        'text': 'कीट पहचान',
+        'text': 'Pest Identification',
         'icon': 'bug_report',
-        'query': 'मेरी फसल में कीड़े लग गए हैं'
+        'query': 'My crop is infested with insects'
       },
-      {'text': 'बीज की सलाह', 'icon': 'eco', 'query': 'कौन सा बीज बोना चाहिए?'},
+      {'text': 'Seed Advice', 'icon': 'eco', 'query': 'Which seeds should be sown?'},
       {
-        'text': 'खाद की जानकारी',
+        'text': 'Fertilizer Information',
         'icon': 'grass',
-        'query': 'फसल में कौन सी खाद डालूं?'
+        'query': 'Which fertilizer should I put in the crop??'
       },
       {
-        'text': 'सिंचाई की सलाह',
+        'text': 'Irrigation advice',
         'icon': 'water_drop',
-        'query': 'कब सिंचाई करनी चाहिए?'
+        'query': 'When should irrigation be done?'
       },
     ];
 
@@ -48,7 +48,7 @@ class QuickSuggestionsWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'त्वरित सुझाव',
+            'quick advice',
             style: AppTheme.lightTheme.textTheme.titleMedium?.copyWith(
               fontWeight: FontWeight.w600,
               color: AppTheme.lightTheme.colorScheme.onSurface,

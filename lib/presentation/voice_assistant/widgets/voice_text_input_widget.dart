@@ -88,7 +88,7 @@ class _VoiceTextInputWidgetState extends State<VoiceTextInputWidget> {
               SizedBox(width: 2.w),
               Expanded(
                 child: Text(
-                  'आपका सवाल',
+                  '',
                   style: AppTheme.lightTheme.textTheme.titleSmall?.copyWith(
                     color: AppTheme.lightTheme.primaryColor,
                     fontWeight: FontWeight.w600,
@@ -131,7 +131,7 @@ class _VoiceTextInputWidgetState extends State<VoiceTextInputWidget> {
                   ),
                   decoration: InputDecoration(
                     border: InputBorder.none,
-                    hintText: 'अपना सवाल यहां लिखें...',
+                    hintText: 'Write your question here...',
                     hintStyle:
                         AppTheme.lightTheme.textTheme.bodyLarge?.copyWith(
                       color: AppTheme.lightTheme.colorScheme.onSurfaceVariant

@@ -36,25 +36,25 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _isPasswordVisible = false;
   bool _isLoading = false;
   bool _isSocialLoading = false;
-  String _currentLanguage = 'hi';
+  String _currentLanguage = 'en'; // Changed to English as default
   bool _showBiometricOption = false;
 
   // Mock credentials for different user types
   final Map<String, Map<String, String>> _mockCredentials = {
     'farmer': {
-      'mobile': '9876543210',
-      'password': 'farmer123',
-      'name': 'रितेश कुमार',
+      'mobile': '7015503726',
+      'password': '123456',
+      'name': 'Ritesh Kumar', // Changed to English name
     },
     'advisor': {
-      'mobile': '9876543211',
-      'password': 'advisor123',
-      'name': 'डॉ. सुनीता शर्मा',
+      'mobile': '7992340091',
+      'password': '123456',
+      'name': 'Shivam', // Changed to English name
     },
     'admin': {
       'mobile': '1234567890',
       'password': '123456',
-      'name': 'प्रशासक',
+      'name': 'Administrator', // Changed to English name
     },
   };
 
@@ -170,7 +170,7 @@ class _LoginScreenState extends State<LoginScreen> {
         HapticFeedback.lightImpact();
         final userData = result['userData'] as Map?;
         final userType = userData?['userType'] ?? 'farmer';
-        final userName = userData?['name'] ?? 'उपयोगकर्ता';
+        final userName = userData?['name'] ?? 'User';
 
         _showSuccessMessage(_getLocalizedText(
           'स्वागत है, $userName!',

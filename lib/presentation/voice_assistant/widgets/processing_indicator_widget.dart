@@ -10,7 +10,7 @@ class ProcessingIndicatorWidget extends StatefulWidget {
   const ProcessingIndicatorWidget({
     super.key,
     required this.isVisible,
-    this.message = 'विश्लेषण कर रहे हैं...',
+    this.message = 'Analyzing...',
   });
 
   @override

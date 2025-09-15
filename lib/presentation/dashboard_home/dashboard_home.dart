@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:record/record.dart';
@@ -221,7 +222,27 @@ class _DashboardHomeState extends State<DashboardHome> with TickerProviderStateM
   }
 
   void _navigateToFeature(String route) {
-    Navigator.pushNamed(context, route);
+    Widget? screen;
+    switch (route) {
+      case "/soil-scan":
+        screen = SoilScanScreen();
+        break;
+      case "/crop-advisory":
+        screen = CropAdvisoryScreen();
+        break;
+      case "/market-prices":
+        screen = MarketPricesScreen();
+        break;
+      case "/pest-identification":
+        screen = PestIdentificationScreen();
+        break;
+    }
+    if (screen != null) {
+      Navigator.push(context, MaterialPageRoute(builder: (context) => screen!));
+    } else {
+      // Fallback for other routes if needed
+      Navigator.pushNamed(context, route);
+    }
   }
 
   void _showFeatureOptions(Map<String, dynamic> feature) {
@@ -285,7 +306,7 @@ class _DashboardHomeState extends State<DashboardHome> with TickerProviderStateM
         // For demo purposes, show a success message after "scanning"
         _showSuccessSnackBar("Scan complete! Image path: ${image.path}");
         // Optionally navigate to the soil-scan route after scanning
-        Navigator.pushNamed(context, '/soil-scan');
+        Navigator.push(context, MaterialPageRoute(builder: (context) => SoilScanScreen()));
       } else {
         _showErrorSnackBar("Scan cancelled");
       }
@@ -447,6 +468,473 @@ class _DashboardHomeState extends State<DashboardHome> with TickerProviderStateM
           color: Colors.white,
           size: 7.w,
         ),
+      ),
+    );
+  }
+}
+
+class CropAdvisoryScreen extends StatelessWidget {
+  final List<Map<String, dynamic>> advisories = [
+    {
+      "title": "Wheat Crop Advisory",
+      "description": "Use balanced fertilizers and monitor for pests. Recommended irrigation every 10 days.",
+      "icon": "agriculture",
+      "color": Color(0xFF8BC34A),
+    },
+    {
+      "title": "Rice Crop Advisory",
+      "description": "Ensure proper water management. Apply nitrogen in split doses.",
+      "icon": "agriculture",
+      "color": Color(0xFF4CAF50),
+    },
+    {
+      "title": "Corn Crop Advisory",
+      "description": "Check for soil moisture. Use hybrid seeds for better yield.",
+      "icon": "agriculture",
+      "color": Color(0xFFFF9800),
+    },
+    {
+      "title": "Soybean Crop Advisory",
+      "description": "Rotate crops to prevent disease. Apply phosphorus at planting.",
+      "icon": "agriculture",
+      "color": Color(0xFF2196F3),
+    },
+    {
+      "title": "Cotton Crop Advisory",
+      "description": "Monitor for bollworms. Use integrated pest management.",
+      "icon": "agriculture",
+      "color": Color(0xFF9C27B0),
+    },
+    {
+      "title": "Tomato Crop Advisory",
+      "description": "Stake plants for support. Water consistently to prevent cracking.",
+      "icon": "agriculture",
+      "color": Color(0xFFF44336),
+    },
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Crop Advisory"),
+        backgroundColor: AppTheme.lightTheme.primaryColor,
+      ),
+      body: ListView.builder(
+        padding: EdgeInsets.all(4.w),
+        itemCount: advisories.length,
+        itemBuilder: (context, index) {
+          final advisory = advisories[index];
+          return Card(
+            elevation: 4,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            color: AppTheme.lightTheme.cardColor,
+            child: Padding(
+              padding: EdgeInsets.all(4.w),
+              child: Row(
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(3.w),
+                    decoration: BoxDecoration(
+                      color: (advisory["color"] as Color).withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: CustomIconWidget(
+                      iconName: advisory["icon"] as String,
+                      color: advisory["color"] as Color,
+                      size: 8.w,
+                    ),
+                  ),
+                  SizedBox(width: 4.w),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          advisory["title"] as String,
+                          style: AppTheme.lightTheme.textTheme.titleMedium?.copyWith(
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        SizedBox(height: 1.h),
+                        Text(
+                          advisory["description"] as String,
+                          style: AppTheme.lightTheme.textTheme.bodyMedium?.copyWith(
+                            color: AppTheme.lightTheme.colorScheme.onSurfaceVariant,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class SoilScanScreen extends StatefulWidget {
+  const SoilScanScreen({super.key});
+
+  @override
+  State<SoilScanScreen> createState() => _SoilScanScreenState();
+}
+
+class _SoilScanScreenState extends State<SoilScanScreen> {
+  List<Map<String, dynamic>> reports = [
+    {
+      "date": "2023-01-01",
+      "ph": 6.5,
+      "nutrients": "N: High, P: Medium, K: Low",
+      "recommendation": "Add potassium fertilizers.",
+    },
+    {
+      "date": "2023-06-15",
+      "ph": 7.0,
+      "nutrients": "N: Medium, P: High, K: Medium",
+      "recommendation": "Balanced, monitor regularly.",
+    },
+    {
+      "date": "2023-09-20",
+      "ph": 6.2,
+      "nutrients": "N: Low, P: Low, K: High",
+      "recommendation": "Apply nitrogen and phosphorus fertilizers.",
+    },
+    {
+      "date": "2024-02-10",
+      "ph": 7.5,
+      "nutrients": "N: High, P: High, K: Low",
+      "recommendation": "Reduce nitrogen, add potassium.",
+    },
+    {
+      "date": "2024-05-05",
+      "ph": 6.8,
+      "nutrients": "N: Medium, P: Medium, K: Medium",
+      "recommendation": "Soil is optimal, continue current practices.",
+    },
+    {
+      "date": "2024-08-30",
+      "ph": 6.0,
+      "nutrients": "N: Low, P: High, K: Low",
+      "recommendation": "Lime to raise pH, add N and K.",
+    },
+  ];
+
+  Future<void> _captureImage() async {
+    final status = await Permission.camera.request();
+    if (status.isGranted) {
+      final ImagePicker picker = ImagePicker();
+      final XFile? image = await picker.pickImage(source: ImageSource.camera);
+      if (image != null) {
+        // Mock adding a new report
+        setState(() {
+          reports.add({
+            "date": DateTime.now().toIso8601String().split('T')[0],
+            "ph": 6.8, // Mock value
+            "nutrients": "N: Low, P: High, K: Medium",
+            "recommendation": "Adjust nitrogen levels.",
+          });
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("New soil scan added! Image path: ${image.path}")),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Scan cancelled")),
+        );
+      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Camera permission denied")),
+      );
+      openAppSettings();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Soil Health Scan"),
+        backgroundColor: AppTheme.lightTheme.primaryColor,
+      ),
+      body: ListView.builder(
+        padding: EdgeInsets.all(4.w),
+        itemCount: reports.length,
+        itemBuilder: (context, index) {
+          final report = reports[index];
+          return Card(
+            elevation: 4,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            color: AppTheme.lightTheme.cardColor,
+            child: Padding(
+              padding: EdgeInsets.all(4.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Report Date: ${report["date"]}",
+                    style: AppTheme.lightTheme.textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  SizedBox(height: 1.h),
+                  Text(
+                    "pH Level: ${report["ph"]}",
+                    style: AppTheme.lightTheme.textTheme.bodyMedium,
+                  ),
+                  Text(
+                    "Nutrients: ${report["nutrients"]}",
+                    style: AppTheme.lightTheme.textTheme.bodyMedium,
+                  ),
+                  SizedBox(height: 1.h),
+                  Text(
+                    "Recommendation: ${report["recommendation"]}",
+                    style: AppTheme.lightTheme.textTheme.bodyMedium?.copyWith(
+                      color: AppTheme.lightTheme.primaryColor,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _captureImage,
+        backgroundColor: AppTheme.lightTheme.primaryColor,
+        child: const Icon(Icons.camera_alt, color: Colors.white),
+      ),
+    );
+  }
+}
+
+class PestIdentificationScreen extends StatefulWidget {
+  const PestIdentificationScreen({super.key});
+
+  @override
+  State<PestIdentificationScreen> createState() => _PestIdentificationScreenState();
+}
+
+class _PestIdentificationScreenState extends State<PestIdentificationScreen> {
+  XFile? capturedImage;
+  List<Map<String, dynamic>> identifications = [
+    {
+      "date": "2024-01-15",
+      "pest": "Aphid",
+      "treatment": "Use insecticide XYZ. Apply every 7 days.",
+    },
+    {
+      "date": "2024-03-22",
+      "pest": "Whitefly",
+      "treatment": "Introduce natural predators. Use neem oil.",
+    },
+    {
+      "date": "2024-05-10",
+      "pest": "Spider Mite",
+      "treatment": "Increase humidity. Apply miticide.",
+    },
+    {
+      "date": "2024-07-05",
+      "pest": "Caterpillar",
+      "treatment": "Hand pick. Use BT spray.",
+    },
+  ];
+
+  Future<void> _capturePest() async {
+    final status = await Permission.camera.request();
+    if (status.isGranted) {
+      final ImagePicker picker = ImagePicker();
+      final XFile? image = await picker.pickImage(source: ImageSource.camera);
+      if (image != null) {
+        setState(() {
+          capturedImage = image;
+          // Mock adding new identification
+          identifications.add({
+            "date": DateTime.now().toIso8601String().split('T')[0],
+            "pest": "Aphid", // Mock
+            "treatment": "Use insecticide XYZ.",
+          });
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Pest identified as Aphid. Treatment: Use insecticide XYZ.")),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Capture cancelled")),
+        );
+      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Camera permission denied")),
+      );
+      openAppSettings();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Pest Identification"),
+        backgroundColor: AppTheme.lightTheme.primaryColor,
+      ),
+      body: Column(
+        children: [
+          if (capturedImage != null)
+            Padding(
+              padding: EdgeInsets.all(4.w),
+              child: Image.file(File(capturedImage!.path), height: 30.h, fit: BoxFit.cover),
+            ),
+          Expanded(
+            child: ListView.builder(
+              padding: EdgeInsets.all(4.w),
+              itemCount: identifications.length,
+              itemBuilder: (context, index) {
+                final id = identifications[index];
+                return Card(
+                  elevation: 4,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                  color: AppTheme.lightTheme.cardColor,
+                  child: Padding(
+                    padding: EdgeInsets.all(4.w),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Date: ${id["date"]}",
+                          style: AppTheme.lightTheme.textTheme.titleMedium?.copyWith(
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        SizedBox(height: 1.h),
+                        Text(
+                          "Pest: ${id["pest"]}",
+                          style: AppTheme.lightTheme.textTheme.bodyMedium,
+                        ),
+                        Text(
+                          "Treatment: ${id["treatment"]}",
+                          style: AppTheme.lightTheme.textTheme.bodyMedium?.copyWith(
+                            color: AppTheme.lightTheme.primaryColor,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _capturePest,
+        backgroundColor: AppTheme.lightTheme.primaryColor,
+        child: const Icon(Icons.camera_alt, color: Colors.white),
+      ),
+    );
+  }
+}
+
+class MarketPricesScreen extends StatelessWidget {
+  final List<Map<String, dynamic>> prices = [
+    {
+      "crop": "Wheat",
+      "price": 25.50,
+      "unit": "per kg",
+      "change": "+1.2%",
+      "color": Color(0xFF4CAF50),
+    },
+    {
+      "crop": "Rice",
+      "price": 40.00,
+      "unit": "per kg",
+      "change": "-0.5%",
+      "color": Color(0xFFF44336),
+    },
+    {
+      "crop": "Corn",
+      "price": 18.75,
+      "unit": "per kg",
+      "change": "+0.8%",
+      "color": Color(0xFF4CAF50),
+    },
+    {
+      "crop": "Soybean",
+      "price": 35.20,
+      "unit": "per kg",
+      "change": "+2.1%",
+      "color": Color(0xFF4CAF50),
+    },
+    {
+      "crop": "Cotton",
+      "price": 150.00,
+      "unit": "per quintal",
+      "change": "-1.3%",
+      "color": Color(0xFFF44336),
+    },
+    {
+      "crop": "Tomato",
+      "price": 22.00,
+      "unit": "per kg",
+      "change": "+0.4%",
+      "color": Color(0xFF4CAF50),
+    },
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Market Prices"),
+        backgroundColor: AppTheme.lightTheme.primaryColor,
+      ),
+      body: ListView.builder(
+        padding: EdgeInsets.all(4.w),
+        itemCount: prices.length,
+        itemBuilder: (context, index) {
+          final price = prices[index];
+          return Card(
+            elevation: 4,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            color: AppTheme.lightTheme.cardColor,
+            child: Padding(
+              padding: EdgeInsets.all(4.w),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        price["crop"] as String,
+                        style: AppTheme.lightTheme.textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      SizedBox(height: 0.5.h),
+                      Text(
+                        "\$${price["price"]} ${price["unit"]}",
+                        style: AppTheme.lightTheme.textTheme.bodyMedium,
+                      ),
+                    ],
+                  ),
+                  Text(
+                    price["change"] as String,
+                    style: AppTheme.lightTheme.textTheme.bodyMedium?.copyWith(
+                      color: price["color"] as Color,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
       ),
     );
   }
