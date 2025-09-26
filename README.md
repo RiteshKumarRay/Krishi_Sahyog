@@ -79,8 +79,8 @@ text
 
 1. **Clone the repository**
 
-git clone https://github.com/yourusername/krishi-sahyog.git
-cd krishi-sahyog
+git clone https://github.com/yourusername/Krishi-Sahyog.git
+cd Krishi-Sahyog
 
 text
 
@@ -204,9 +204,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 👥 Team
 
-- **Lead Developer** - [Your Name](https://github.com/yourusername)
-- **UI/UX Designer** - [Designer Name]
-- **Agricultural Expert** - [Expert Name]
+- **Lead Developer** - RiteshKumarRay
+- **UI/UX Designer** - RiteshKumarRay
+- **Agricultural Expert** - ShivamSinghYadav
+- **Backend Developer** - ShivamSinghYadav
 
 ## 🙏 Acknowledgments
 
