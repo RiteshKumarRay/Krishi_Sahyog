@@ -181,27 +181,6 @@ The app supports multiple languages:
 - **English** - Secondary language option
 - **Voice Support** - Audio in both languages
 
-## 🤝 Contributing
-
-We welcome contributions! Please follow these steps:
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-### Contribution Guidelines
-- Follow Flutter/Dart style guide
-- Add tests for new features
-- Update documentation
-- Ensure responsive design
-- Test on multiple devices
-
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
 ## 👥 Team
 
 - **Lead Developer** - RiteshKumarRay
@@ -216,32 +195,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Flutter Team** - Amazing cross-platform framework
 - **Agricultural Department** - Domain expertise and guidance
 
-## 📞 Support
-
-For support, questions, or suggestions:
-- Email: support@krishisahyog.com
-- GitHub Issues: [Create an issue](https://github.com/yourusername/krishi-sahyog/issues)
-- Documentation: [Wiki](https://github.com/yourusername/krishi-sahyog/wiki)
-
-## 🚧 Roadmap
-
-### Current Version (v1.0)
-- ✅ User authentication
-- ✅ Weather dashboard
-- ✅ Basic crop advisory
-- ✅ Multi-language support
-
-### Upcoming Features (v2.0)
-- 🔄 AI-powered crop disease detection
-- 🔄 IoT sensor integration
-- 🔄 Community forum
-- 🔄 Marketplace integration
-- 🔄 Advanced analytics dashboard
-
----
-
 <p align="center">
   Made with ❤️ for farmers by the Krishi Sahyog team
+  Its just a College Project
 </p>
 
 <p align="center">
